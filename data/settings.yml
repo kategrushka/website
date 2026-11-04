@@ -1,21 +1,23 @@
 site_name: First Last
 tagline: Cello
 description: Official website – concerts, projects, biography and contact.
-logo: ""
-favicon: ""
 email: hello@example.com
 nav:
   - label: About
     url: /about/
+    dropdown: false
   - label: Concerts
     url: /live/
+    dropdown: false
   - label: Projects
     url: /projects/
     dropdown: true
   - label: Gallery
     url: /gallery/
+    dropdown: false
   - label: Contact
     url: /contact/
+    dropdown: false
 colors:
   background: "#ffffff"
   surface: "#f4f4f4"
@@ -23,18 +25,10 @@ colors:
   accent: "#7a4b2a"
 fonts:
   heading:
-    preset: cormorant
-    custom_name: ""
-    regular: ""
-    bold: ""
-    italic: ""
+    preset: worksans
   body:
     preset: worksans
-    custom_name: ""
-    regular: ""
-    bold: ""
-    italic: ""
-  heading_uppercase: false
+  heading_uppercase: true
 social:
   - platform: instagram
     url: https://www.instagram.com/
@@ -48,5 +42,3 @@ newsletter:
   enabled: false
   title: Newsletter
   text: Be the first to hear about new concerts and releases.
-  embed: ""
-footer_text: ""
