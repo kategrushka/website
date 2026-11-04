@@ -2,7 +2,7 @@
 {{- $hasHero := and (index $hero "image") true -}}
 {{- $heroTone := index $hero "text_color" | default "light" -}}
 <!doctype html>
-<html lang="{{ site.Language.Locale | default "de-DE" }}">
+<html lang="{{ site.Language.Locale | default "en" }}">
 <head>
   {{- partial "head.html" . }}
   {{- if .Params.images }}

@@ -1,5 +1,5 @@
 ---
-title: Start
+title: Home
 hero:
   image: /images/hero.jpg
   position: center
@@ -9,14 +9,14 @@ hero:
   headline: ""
   subline: ""
 quotes:
-  - text: "Ein Klang, der sich Zeit nimmt – warm, klar und voller Geschichten."
-    source: Platzhalter-Zitat, Musikmagazin
-  - text: "Zwischen Bach und Gegenwart findet sie eine ganz eigene Stimme."
-    source: Platzhalter-Zitat, Tageszeitung
+  - text: "A sound that takes its time – warm, clear and full of stories."
+    source: Placeholder quote, music magazine
+  - text: "Between Bach and the present day, a voice entirely of its own."
+    source: Placeholder quote, daily newspaper
 buttons:
-  - label: Termine
+  - label: Concerts
     url: /live/
-  - label: Musik hören
+  - label: Listen
     url: /projects/
   - label: Newsletter
     url: /contact/#newsletter

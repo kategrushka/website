@@ -7,11 +7,11 @@ const lightbox = new PhotoSwipeLightbox({
   pswpModule: () => import('{{ .core }}'),
   bgOpacity: 0.92,
   showHideAnimationType: 'fade',
-  closeTitle: 'Schließen (Esc)',
-  zoomTitle: 'Zoomen',
-  arrowPrevTitle: 'Vorheriges Bild',
-  arrowNextTitle: 'Nächstes Bild',
-  errorMsg: 'Das Bild konnte nicht geladen werden.',
+  closeTitle: '{{ .close }}',
+  zoomTitle: '{{ .zoom }}',
+  arrowPrevTitle: '{{ .prev }}',
+  arrowNextTitle: '{{ .next }}',
+  errorMsg: '{{ .error }}',
 });
 
 // Caption + photographer credit at the bottom of the lightbox

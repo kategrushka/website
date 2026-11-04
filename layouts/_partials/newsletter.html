@@ -6,7 +6,7 @@
     {{- with $n.text }}<p class="newsletter__text">{{ . }}</p>{{ end }}
     <div class="newsletter__embed">{{ $n.embed | safeHTML }}</div>
     <p class="newsletter__consent">{{ i18n "newsletter_consent" }}
-      {{- with site.GetPage "/datenschutz" }} <a href="{{ .RelPermalink }}">{{ i18n "privacy_policy" }}</a>{{ end }}.</p>
+      {{- with site.GetPage "/privacy" }} <a href="{{ .RelPermalink }}">{{ i18n "privacy_policy" }}</a>{{ end }}.</p>
   </div>
 </section>
 {{- end }}

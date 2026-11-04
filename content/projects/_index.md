@@ -1,5 +1,5 @@
 ---
-title: Projekte
+title: Projects
 hero:
   image: /images/header-music.jpg
   position: center
@@ -7,4 +7,4 @@ hero:
   text_color: light
   height: small
 ---
-<p>Alben, Ensembles und Programme.</p>
+<p>Albums, ensembles and programmes.</p>

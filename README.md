@@ -2,7 +2,7 @@
 
 A static website for a cellist. It's hosted for free on **GitHub Pages** and edited in the browser with **[Pages CMS](https://pagescms.org)**. Nobody needs to install any software.
 
-- **Pages:** Home, Über mich, Termine (concerts), Projekte (overview + one page per project), Galerie, Kontakt, Impressum, Datenschutz
+- **Pages:** Home, About, Concerts, Projects (overview + one page per project), Gallery, Contact, Impressum (legal notice), Privacy policy
 - **Built with:** [Hugo](https://gohugo.io) (runs only on GitHub's servers via GitHub Actions)
 - **Privacy:** no cookies, no tracking, fonts are self-hosted, and Bandcamp/YouTube only load after a click. No cookie banner is needed.
 
@@ -20,12 +20,12 @@ Repository → **Settings → Pages → Build and deployment → Source: "GitHub
 
 Every push to `main` now runs [.github/workflows/deploy.yml](.github/workflows/deploy.yml), which builds the site and publishes it. The first deploy takes about 1–2 minutes. The address is shown under Settings → Pages (e.g. `https://<user>.github.io/<repo>/`).
 
-The workflow also runs **every night at 04:00 UTC**, so concerts that are over move automatically to "Vergangene Termine". You can also start it manually under **Actions → Website veröffentlichen → Run workflow**.
+The workflow also runs **every night at 04:00 UTC**, so concerts that are over move automatically to "Past concerts". You can also start it manually under **Actions → Website veröffentlichen → Run workflow**.
 
 ### 3. Connect Pages CMS
 1. Go to **https://app.pagescms.org** and sign in with GitHub.
 2. Install the Pages CMS GitHub app for this repository.
-3. Open the repository in Pages CMS. The menu (Termine, Projekte, Startseite …) comes from [.pages.yml](.pages.yml).
+3. Open the repository in Pages CMS. The menu (Concerts, Projects, Home page …) comes from [.pages.yml](.pages.yml).
 4. To let the musician edit, invite them in Pages CMS (Settings → Collaborators) or add their GitHub account as a collaborator on the repository.
 
 ### 4. Custom domain (e.g. `vorname-nachname.de`)
@@ -57,14 +57,14 @@ Recommended: verify the domain under your GitHub account settings → Pages to p
 | `static/fonts/`, `static/files/` | Fonts and downloadable files (PDF) |
 | `layouts/` | HTML templates (the design) |
 | `assets/css/main.css` | Stylesheet |
-| `i18n/de.yaml` | Fixed labels such as "Tickets", "Kommende Termine" (English versions in `en.yaml`) |
+| `i18n/en.yaml` | Fixed labels such as "Tickets", "Upcoming concerts" (German versions in `de.yaml`; switch with `defaultContentLanguage` in `hugo.toml`) |
 | `.pages.yml` | Pages CMS editing forms |
 
 **Notes**
 - **Images:** upload them in any size. The build creates 480–2400 px WebP versions with `srcset`, and gallery images get lightbox versions.
 - **Concerts** don't get their own pages. They're listed on `/live/`, split into upcoming and past by date, with schema.org `MusicEvent` data for search engines.
 - **Projects** are ordered by the "Reihenfolge" field (`weight`). Every block on a project page is optional: header image, cover, text, quotes, buttons, Bandcamp player, YouTube video, tracklist, credits, and a gallery (grid / masonry / stacked).
-- **Menu drop-down:** a menu item with "Unterseiten als Untermenü zeigen" lists the pages of that section automatically (used for Projekte).
+- **Menu drop-down:** a menu item with "Unterseiten als Untermenü zeigen" lists the pages of that section automatically (used for Projects).
 - **E-mail addresses** are base64-encoded in the HTML and decoded by a few lines of JS (simple protection against address harvesting).
 - **Faircamp:** projects have a `faircamp_url` field. A Faircamp site could later be built in the workflow into e.g. `/music/` and linked there.
 

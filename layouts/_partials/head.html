@@ -27,7 +27,7 @@
 <meta property="og:title" content="{{ $title }}">
 <meta property="og:description" content="{{ $desc | plainify }}">
 <meta property="og:url" content="{{ .Permalink }}">
-<meta property="og:locale" content="de_DE">
+<meta property="og:locale" content="{{ replace (site.Language.Locale | default "en") "-" "_" }}">
 {{- $ogsrc := .Params.cover | default (index $hero "image") | default (index (site.Home.Params.hero | default dict) "image") }}
 {{- with partial "getimage.html" $ogsrc }}
   {{- if ne .MediaType.SubType "svg" }}

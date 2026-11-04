@@ -490,10 +490,10 @@ content:
         label: Further information (optional)
         type: rich-text
 
-  - name: datenschutz
-    label: Privacy policy (Datenschutz)
+  - name: privacy
+    label: Privacy policy
     type: file
-    path: content/datenschutz.md
+    path: content/privacy.md
     fields:
       - name: title
         label: Title

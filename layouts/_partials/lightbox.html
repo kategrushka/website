@@ -1,5 +1,5 @@
 {{- /* Loads the PhotoSwipe lightbox (only on pages that have images). */ -}}
 {{- $lb := resources.Get "vendor/photoswipe/photoswipe-lightbox.esm.min.js" | fingerprint }}
 {{- $ps := resources.Get "vendor/photoswipe/photoswipe.esm.min.js" | fingerprint }}
-{{- $js := resources.Get "js/gallery.js" | resources.ExecuteAsTemplate "js/gallery.js" (dict "lightbox" $lb.RelPermalink "core" $ps.RelPermalink) | minify | fingerprint }}
+{{- $js := resources.Get "js/gallery.js" | resources.ExecuteAsTemplate "js/gallery.js" (dict "lightbox" $lb.RelPermalink "core" $ps.RelPermalink "close" (i18n "lb_close") "zoom" (i18n "lb_zoom") "prev" (i18n "lb_prev") "next" (i18n "lb_next") "error" (i18n "lb_error")) | minify | fingerprint }}
 <script type="module" src="{{ $js.RelPermalink }}"></script>

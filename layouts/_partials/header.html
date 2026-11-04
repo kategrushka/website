@@ -16,12 +16,12 @@
       <span class="nav-toggle__open">{{ partial "icon.html" "ui-menu" }}</span>
       <span class="nav-toggle__close">{{ partial "icon.html" "ui-close" }}</span>
     </button>
-    <nav id="site-nav" class="site-nav" aria-label="Hauptmenü" data-nav>
+    <nav id="site-nav" class="site-nav" aria-label="{{ i18n "main_menu" }}" data-nav>
       <ul class="site-nav__list">
         {{- range $s.nav }}
           {{- $href := partial "url.html" .url }}
           {{- $active := and (ne $href ("" | relURL)) (hasPrefix $current $href) }}
-          {{- /* "Unterseiten als Untermenü": list the pages of that section (e.g. all projects) */}}
+          {{- /* "Show sub-pages as a drop-down menu": list the pages of that section (e.g. all projects) */}}
           {{- $sub := slice }}
           {{- if .dropdown }}
             {{- with site.GetPage (strings.TrimSuffix "/" .url) }}{{ $sub = .Pages.ByWeight }}{{ end }}

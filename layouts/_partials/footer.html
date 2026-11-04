@@ -9,7 +9,7 @@
     <p class="site-footer__legal">
       <span>© {{ now.Year }} {{ $s.site_name }}</span>
       {{- with site.GetPage "/impressum" }}<a href="{{ .RelPermalink }}">{{ i18n "imprint" }}</a>{{ end }}
-      {{- with site.GetPage "/datenschutz" }}<a href="{{ .RelPermalink }}">{{ i18n "privacy" }}</a>{{ end }}
+      {{- with site.GetPage "/privacy" }}<a href="{{ .RelPermalink }}">{{ i18n "privacy" }}</a>{{ end }}
     </p>
   </div>
 </footer>

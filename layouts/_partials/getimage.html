@@ -10,7 +10,7 @@
   {{- with resources.Get $p -}}
     {{- $r = . -}}
   {{- else -}}
-    {{- warnf "Bild nicht gefunden: %s" $p -}}
+    {{- warnf "Image not found: %s" $p -}}
   {{- end -}}
 {{- end -}}
 {{- return $r -}}

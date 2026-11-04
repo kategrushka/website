@@ -81,7 +81,7 @@
 {{ partial "buttons.html" $p.buttons }}
 
 {{- with $p.images }}
-<section class="container project-gallery{{ if eq $p.gallery_style "stacked" }} container--narrow{{ end }}" aria-label="{{ $p.gallery_title | default "Bilder" }}">
+<section class="container project-gallery{{ if eq $p.gallery_style "stacked" }} container--narrow{{ end }}" aria-label="{{ $p.gallery_title | default (i18n "photos") }}">
   {{- with $p.gallery_title }}<h2 class="section-title">{{ . }}</h2>{{ end }}
   {{ partial "gallery-grid.html" (dict "images" . "style" $p.gallery_style) }}
 </section>

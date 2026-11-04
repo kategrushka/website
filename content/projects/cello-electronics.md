@@ -1,6 +1,6 @@
 ---
-title: Cello & Elektronik
-subtitle: Solo-Programm
+title: Cello & Electronics
+subtitle: Solo programme
 year: ""
 weight: 4
 hero:
@@ -23,5 +23,5 @@ gallery_title: ""
 gallery_style: grid
 images: []
 ---
-<p>Platzhaltertext: Ein Projekt mit nur einem Titelbild und Text – zum Beispiel ein Solo-Programm, ein Education-Projekt oder eine Kooperation.</p>
-<p>Weitere Absätze, Zwischenüberschriften und Links sind im Editor einfach möglich.</p>
+<p>Placeholder text: a project with just a header image and text – for example a solo programme, an education project or a collaboration.</p>
+<p>More paragraphs, subheadings and links are easy to add in the editor.</p>

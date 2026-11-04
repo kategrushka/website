@@ -1,15 +1,15 @@
 ---
 title: Impressum
 layout: impressum
-name: Vorname Nachname
+name: First Last
 business: ""
 address: |
   Musterstraße 1
   12345 Musterstadt
-  Deutschland
-email: kontakt@example.com
+  Germany
+email: hello@example.com
 phone: ""
 vat_id: ""
-responsible_name: Vorname Nachname
+responsible_name: First Last
 responsible_address: ""
 ---

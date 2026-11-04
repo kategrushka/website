@@ -1,6 +1,6 @@
 ---
-title: Über mich
-description: Biografie der Cellistin / des Cellisten.
+title: About
+description: Biography of the cellist.
 hero:
   image: /images/header-about.jpg
   position: center
@@ -8,17 +8,17 @@ hero:
   text_color: light
   height: medium
 image: /images/portrait.jpg
-image_alt: Porträt mit Cello
-image_credit: Platzhalterbild
+image_alt: Portrait with cello
+image_credit: Placeholder image
 downloads:
-  - label: Pressemappe (PDF)
-    file: /files/pressemappe-beispiel.pdf
+  - label: Press kit (PDF)
+    file: /files/press-kit-sample.pdf
 ---
-<p>Dies ist ein Platzhaltertext für die Biografie. Hier kann in ein paar Absätzen erzählt werden, wie die musikalische Reise begann, bei wem studiert wurde und welche Projekte heute im Mittelpunkt stehen.</p>
-<p>Ein zweiter Absatz könnte von Ensembles, Kooperationen und besonderen Auftritten handeln – oder von der Liebe zu bestimmten Komponistinnen und Komponisten, zur Improvisation oder zu Musik jenseits der Klassik.</p>
-<h2>Ensembles &amp; Projekte</h2>
+<p>This is placeholder text for the biography. A few paragraphs can tell how the musical journey began, who the teachers were, and which projects are the focus today.</p>
+<p>A second paragraph could cover ensembles, collaborations and memorable performances – or a love for particular composers, for improvisation, or for music beyond the classical repertoire.</p>
+<h2>Ensembles &amp; projects</h2>
 <ul>
-<li>Beispiel-Duo mit Klavier</li>
-<li>Streichquartett „Platzhalter“</li>
-<li>Solo-Programm mit Cello und Live-Elektronik</li>
+<li>Example duo with piano</li>
+<li>“Placeholder” string quartet</li>
+<li>Solo programme for cello and live electronics</li>
 </ul>

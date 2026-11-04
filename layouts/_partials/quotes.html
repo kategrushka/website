@@ -1,5 +1,5 @@
 {{- with . }}
-<section class="quotes container container--narrow" aria-label="Zitate">
+<section class="quotes container container--narrow" aria-label="{{ i18n "quotes" }}">
   {{- range . }}
   <figure class="quote">
     <blockquote><p>{{ .text }}</p></blockquote>

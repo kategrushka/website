@@ -4,8 +4,8 @@
 
 # Overridden automatically by the GitHub Actions build (custom domain or github.io URL).
 baseURL = "https://example.com/"
-locale = "de-DE"
-defaultContentLanguage = "de"
+locale = "en"
+defaultContentLanguage = "en"
 title = "Cellist"
 timeZone = "Europe/Berlin"
 
@@ -56,7 +56,7 @@ disableKinds = ["taxonomy", "term", "rss"]
     source = "assets/images"
     target = "static/images"
 
-# Concerts are only listed on the "Termine" page, they don't get pages of their own.
+# Concerts are only listed on the "Concerts" page, they don't get pages of their own.
 [[cascade]]
   [cascade.build]
     render = "never"
@@ -69,4 +69,4 @@ disableKinds = ["taxonomy", "term", "rss"]
   [cascade.sitemap]
     disable = true
   [cascade.target]
-    path = "{/impressum,/datenschutz}"
+    path = "{/impressum,/privacy}"

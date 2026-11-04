@@ -1,5 +1,5 @@
 ---
-title: Termine
+title: Concerts
 hero:
   image: /images/header-live.jpg
   position: center

@@ -1,26 +1,26 @@
 ---
-title: Kontakt
+title: Contact
 layout: contact
 hero:
   image: ""
 contacts:
-  - label: Allgemein
-    name: Vorname Nachname
+  - label: General
+    name: First Last
     info: ""
-    email: kontakt@example.com
+    email: hello@example.com
     phone: ""
-    subject: Anfrage über die Website
+    subject: Message via the website
   - label: Booking
-    name: Beispiel-Agentur
-    info: Konzertanfragen & Festivals
+    name: Example Agency
+    info: Concert requests & festivals
     email: booking@example.com
     phone: "+49 30 1234567"
-    subject: Booking-Anfrage
-  - label: Presse
-    name: Vorname Nachname
-    info: Interviews, Pressefotos, Rezensionsexemplare
-    email: presse@example.com
+    subject: Booking request
+  - label: Press
+    name: First Last
+    info: Interviews, press photos, review copies
+    email: press@example.com
     phone: ""
-    subject: Presseanfrage
+    subject: Press request
 ---
-<p>Ich freue mich über Nachrichten – für Konzertanfragen, Unterricht oder einfach so.</p>
+<p>I'm always happy to hear from you – about concerts, teaching, or just to say hello.</p>

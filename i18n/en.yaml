@@ -28,10 +28,19 @@ embed_privacy_link: More in the privacy policy
 embed_load: Load content
 newsletter_consent: "By signing up you agree to receive the newsletter. You can unsubscribe at any time. Details in the"
 privacy: Privacy
-imprint: Imprint
+imprint: Impressum
 privacy_policy: privacy policy
-imprint_heading: Legal notice
+imprint_heading: Information pursuant to § 5 DDG
 imprint_contact: Contact
-imprint_vat: VAT ID
-imprint_responsible: Responsible for content
+imprint_vat: VAT identification number pursuant to § 27a UStG
+imprint_responsible: Responsible for content pursuant to § 18 (2) MStV
 time_suffix: ""
+main_menu: Main menu
+quotes: Quotes
+photos: Photos
+not_found: Sorry, this page doesn't exist.
+lb_close: Close (Esc)
+lb_zoom: Zoom
+lb_prev: Previous image
+lb_next: Next image
+lb_error: The image could not be loaded.

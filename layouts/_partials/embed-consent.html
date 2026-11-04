@@ -3,7 +3,7 @@
   Nothing is loaded from the external service until the visitor clicks the button.
   Usage: partial "embed-consent.html" (dict "provider" "Bandcamp" "src" "https://…" "title" "…" "height" 400)
 */ -}}
-{{- $privacy := site.GetPage "/datenschutz" -}}
+{{- $privacy := site.GetPage "/privacy" -}}
 <div class="embed" data-embed>
   <div class="embed__consent">
     {{ partial "icon.html" "ui-music" }}

@@ -1,7 +1,7 @@
 {{ define "main" }}
 <header class="page-header container">
   <h1 class="page-header__title">404</h1>
-  <p class="page-header__sub">Diese Seite gibt es leider nicht.</p>
+  <p class="page-header__sub">{{ i18n "not_found" }}</p>
 </header>
 <p class="center"><a class="btn" href="{{ "" | relURL }}">{{ i18n "home" }}</a></p>
 {{ end }}

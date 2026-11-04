@@ -11,7 +11,7 @@ All you need is a web browser and your GitHub account. Nothing has to be install
 
 > Every save is stored with a date, so mistakes can always be undone. If in doubt, just ask.
 
-**Note on language:** the website itself is in German. Fixed labels such as "Tickets", "Kommende Termine" or "Impressum" are set in German automatically, so please write page texts in German too. (The site can be switched to English if needed – ask your developer.)
+**Note on language:** the website is in English. Only the legal notice is called "Impressum", because that is the term German law expects.
 
 ---
 
@@ -20,7 +20,7 @@ All you need is a web browser and your GitHub account. Nothing has to be install
 ### Add a concert
 **Concerts → Add an entry**
 - Fill in **Date**, **Time** (24-hour format, e.g. `19:30`), **City** and **Venue**.
-- **Programme / title** is optional, e.g. "Bach & Gegenwart".
+- **Programme / title** is optional, e.g. "Bach & Beyond".
 - **Ticket link:** the full address, starting with `https://`.
 - **Status:** choose *Sold out*, *Cancelled* or *Free entry* if needed.
 
@@ -43,14 +43,14 @@ Concerts that are over move down to "past concerts" automatically every night. Y
 | Tracklist, Credits | For albums |
 | Photos + Photo layout | The project's own photo gallery: *Grid*, *Masonry* or *Stacked with captions* |
 
-New projects appear automatically in the overview and in the menu under "Projekte".
+New projects appear automatically in the overview and in the menu under "Projects".
 
 ### Embed a Bandcamp player
 1. On Bandcamp, open the album → **Share / Embed** → **Embed this album**.
 2. Pick any player size and **copy the whole code** (it starts with `<iframe`).
 3. Paste it into the project's **Bandcamp player** field. Done.
 
-For privacy reasons, the player only loads after a visitor clicks "Inhalt laden" (load content). That's intentional.
+For privacy reasons, the player only loads after a visitor clicks "Load content". That's intentional.
 
 ### Photos in the gallery
 **Gallery → Photos → +**
@@ -81,7 +81,7 @@ Under **Contact → Contacts** you can add as many contacts as you like (e.g. Ge
 
 ### Name, menu, social media
 - **Name:** shown at the top of every page. You can upload a **Logo** instead.
-- **Menu:** rename, reorder or remove entries. Link examples: `/about/`, `/live/`, `/projects/`, `/gallery/`, `/contact/`. Tick "Show sub-pages as a drop-down menu" to list all pages of a section (used for Projekte).
+- **Menu:** rename, reorder or remove entries. Link examples: `/about/`, `/live/`, `/projects/`, `/gallery/`, `/contact/`. Tick "Show sub-pages as a drop-down menu" to list all pages of a section (used for Projects).
 - **Social media:** choose the platform and paste the address of your profile. The icon appears automatically.
 
 ### Colours
@@ -105,5 +105,5 @@ Colours are entered as a code, e.g. `#ffffff` for white or `#7a4b2a` for brown. 
 **This website template is not legal advice.** The site is run from Germany, so German law applies:
 
 - **Legal notice (Impressum):** fill in all required fields (name, full postal address without a P.O. box, email). The website builds the legally required page (§ 5 DDG) from them.
-- **Privacy policy (Datenschutz):** the included page is only an **outline with placeholders**. Before going live, create the real text with a generator such as e-recht24.de or datenschutz-generator.de, or have a lawyer check it, and paste it in. Facts the generator will ask about: hosting on **GitHub Pages**, **no cookies / no tracking**, **fonts hosted on the site itself**, **contact by email**, **Bandcamp** and possibly **YouTube embeds that load after a click**, and a **newsletter** if you use one.
+- **Privacy policy:** the included page is only an **outline with placeholders**. Before going live, create the real text with a generator such as e-recht24.de or datenschutz-generator.de, or have a lawyer check it, and paste it in. Facts the generator will ask about: hosting on **GitHub Pages**, **no cookies / no tracking**, **fonts hosted on the site itself**, **contact by email**, **Bandcamp** and possibly **YouTube embeds that load after a click**, and a **newsletter** if you use one.
 - If you add something new (e.g. a different player), the privacy policy must be updated.

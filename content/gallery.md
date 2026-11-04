@@ -1,32 +1,32 @@
 ---
-title: Galerie
+title: Gallery
 layout: gallery
 hero:
   image: ""
 style: grid
 images:
   - image: /images/gallery-1.jpg
-    alt: Platzhalterbild – abstrakte warme Farbflächen
-    caption: Konzert im Beispielsaal
-    credit: Platzhalter
+    alt: Placeholder image – abstract warm colour fields
+    caption: Concert at the Example Hall
+    credit: Placeholder
   - image: /images/gallery-2.jpg
-    alt: Platzhalterbild – blaue und braune Farbflächen
-    caption: Probe
-    credit: Platzhalter
+    alt: Placeholder image – blue and brown colour fields
+    caption: Rehearsal
+    credit: Placeholder
   - image: /images/gallery-3.jpg
-    alt: Platzhalterbild – helle beige Farbflächen
+    alt: Placeholder image – light beige colour fields
     caption: ""
-    credit: Platzhalter
+    credit: Placeholder
   - image: /images/gallery-4.jpg
-    alt: Platzhalterbild – grüne und goldene Farbflächen
+    alt: Placeholder image – green and gold colour fields
     caption: Backstage
-    credit: Platzhalter
+    credit: Placeholder
   - image: /images/gallery-5.jpg
-    alt: Platzhalterbild – dunkelbraune Farbflächen
+    alt: Placeholder image – dark brown colour fields
     caption: ""
-    credit: Platzhalter
+    credit: Placeholder
   - image: /images/gallery-6.jpg
-    alt: Platzhalterbild – violette Farbflächen
-    caption: Studioaufnahme
-    credit: Platzhalter
+    alt: Placeholder image – purple colour fields
+    caption: Studio recording
+    credit: Placeholder
 ---

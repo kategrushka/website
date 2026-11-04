@@ -1,5 +1,5 @@
 ---
-title: Zwischen Zeiten
+title: Between Times
 subtitle: Album
 year: 2024
 weight: 3
@@ -15,15 +15,15 @@ links:
     label: ""
     url: https://open.spotify.com/
 tracklist:
-  - Suite Nr. 1 – Prélude
-  - Suite Nr. 1 – Allemande
-  - Neue Komposition für Cello solo
+  - Suite No. 1 – Prélude
+  - Suite No. 1 – Allemande
+  - New piece for solo cello
 credits: |
-  Cello: Vorname Nachname
+  Cello: First Last
 quotes: []
 buttons: []
 gallery_title: ""
 gallery_style: grid
 images: []
 ---
-<p>Platzhaltertext: Werke aus Barock und Gegenwart im Dialog.</p>
+<p>Placeholder text: Baroque and contemporary works in dialogue.</p>
