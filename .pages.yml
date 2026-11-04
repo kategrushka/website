@@ -3,17 +3,17 @@
 
 media:
   - name: images
-    label: Bilder
+    label: Images
     input: assets/images
     output: /images
     categories: [image]
   - name: files
-    label: Dateien (PDF)
+    label: Files (PDF)
     input: static/files
     output: /files
     categories: [document]
   - name: fonts
-    label: Schriftarten
+    label: Fonts
     input: static/fonts
     output: /fonts
     extensions: [woff2, woff, ttf, otf]
@@ -21,121 +21,121 @@ media:
 components:
   hero:
     type: object
-    label: Titelbild
-    description: Großes Foto oben auf der Seite. Leer lassen für eine schlichte Überschrift.
+    label: Header image
+    description: Large photo at the top of the page. Leave empty for a simple text heading.
     fields:
       - name: image
-        label: Bild
+        label: Image
         type: image
         options:
           media: images
       - name: position
-        label: Bildausschnitt
-        description: Welcher Teil des Fotos sichtbar bleibt, wenn es zugeschnitten wird.
+        label: Focus point
+        description: Which part of the photo stays visible when it is cropped.
         type: select
         default: center
         options:
           values:
-            - { value: center, label: Mitte }
-            - { value: center top, label: Oben }
-            - { value: center bottom, label: Unten }
-            - { value: left center, label: Links }
-            - { value: right center, label: Rechts }
+            - { value: center, label: Center }
+            - { value: center top, label: Top }
+            - { value: center bottom, label: Bottom }
+            - { value: left center, label: Left }
+            - { value: right center, label: Right }
       - name: overlay
-        label: Abdunkeln (%)
-        description: Macht Schrift auf hellen Fotos besser lesbar. 0 = gar nicht, 80 = stark.
+        label: Darken (%)
+        description: Makes text on bright photos easier to read. 0 = not at all, 80 = strongly.
         type: number
         default: 35
         options:
           min: 0
           max: 80
       - name: text_color
-        label: Schriftfarbe auf dem Bild
+        label: Text colour on the image
         type: select
         default: light
         options:
           values:
-            - { value: light, label: Hell (für dunkle Fotos) }
-            - { value: dark, label: Dunkel (für helle Fotos) }
+            - { value: light, label: Light (for dark photos) }
+            - { value: dark, label: Dark (for bright photos) }
       - name: height
-        label: Höhe
+        label: Height
         type: select
         default: medium
         options:
           values:
-            - { value: full, label: Ganzer Bildschirm }
-            - { value: large, label: Groß }
-            - { value: medium, label: Mittel }
-            - { value: small, label: Klein }
+            - { value: full, label: Full screen }
+            - { value: large, label: Large }
+            - { value: medium, label: Medium }
+            - { value: small, label: Small }
       - name: headline
-        label: Überschrift (optional)
-        description: Leer lassen = Seitentitel bzw. Name.
+        label: Headline (optional)
+        description: Leave empty to use the page title (or the site name on the home page).
         type: string
       - name: subline
-        label: Unterzeile (optional)
+        label: Subline (optional)
         type: string
 
   quotes:
     type: object
-    label: Zitate
+    label: Quotes
     list: true
     fields:
       - name: text
-        label: Zitat
+        label: Quote
         type: text
       - name: source
-        label: Quelle
+        label: Source
         type: string
   buttons:
     type: object
-    label: Knöpfe
-    description: z. B. „Termine“ → /live/ oder ein externer Link https://…
+    label: Buttons
+    description: "e.g. “Concerts” → /live/ or an external link starting with https://"
     list: true
     fields:
       - name: label
-        label: Beschriftung
+        label: Label
         type: string
       - name: url
         label: Link
         type: string
   gallery_style:
     type: select
-    label: Darstellung der Fotos
+    label: Photo layout
     default: grid
     options:
       values:
-        - { value: grid, label: Raster (quadratisch zugeschnitten) }
-        - { value: masonry, label: Mauerwerk (Originalformat) }
-        - { value: stacked, label: Untereinander, groß mit Bildunterschrift }
+        - { value: grid, label: Grid (cropped to squares) }
+        - { value: masonry, label: Masonry (original proportions) }
+        - { value: stacked, label: "Stacked: large, one below the other, with captions" }
   gallery_images:
     type: object
-    label: Fotos
-    description: Reihenfolge per Ziehen ändern. Nur Fotos verwenden, für die eine Nutzungserlaubnis vorliegt.
+    label: Photos
+    description: Drag to reorder. Only use photos you have permission to use.
     list: true
     fields:
       - name: image
-        label: Foto
+        label: Photo
         type: image
         required: true
         options:
           media: images
       - name: alt
-        label: Bildbeschreibung (für blinde Menschen)
-        description: Was ist zu sehen? z. B. „Auf der Bühne mit Cello, warmes Licht“
+        label: Image description (for blind visitors)
+        description: "What can be seen? e.g. “On stage with cello, warm light”"
         type: string
         required: true
       - name: caption
-        label: Bildunterschrift (optional)
+        label: Caption (optional)
         type: string
       - name: credit
-        label: Fotograf*in
+        label: Photographer
         type: string
         required: true
 
 content:
-  # ------------------------------------------------------------------ Termine
+  # ------------------------------------------------------------------ Concerts
   - name: concerts
-    label: Termine
+    label: Concerts
     type: collection
     path: content/live
     exclude: [_index.md]
@@ -149,27 +149,27 @@ content:
         order: desc
     fields:
       - name: date
-        label: Datum
+        label: Date
         type: date
         required: true
       - name: time
-        label: Uhrzeit
-        description: z. B. 19:30
+        label: Time
+        description: 24-hour format, e.g. 19:30
         type: string
       - name: city
-        label: Stadt
+        label: City
         type: string
         required: true
       - name: venue
-        label: Ort / Saal
+        label: Venue
         type: string
       - name: title
-        label: Programm / Titel
-        description: z. B. „Bach & Gegenwart“ oder „Duo mit Klavier“
+        label: Programme / title
+        description: "e.g. “Bach & Beyond” or “Duo with piano”"
         type: string
       - name: ticket_url
-        label: Ticket-Link
-        description: Vollständige Adresse, beginnend mit https://
+        label: Ticket link
+        description: Full address, starting with https://
         type: string
       - name: status
         label: Status
@@ -178,17 +178,17 @@ content:
         options:
           values:
             - { value: normal, label: Normal }
-            - { value: soldout, label: Ausverkauft }
-            - { value: cancelled, label: Abgesagt }
-            - { value: free, label: Eintritt frei }
+            - { value: soldout, label: Sold out }
+            - { value: cancelled, label: Cancelled }
+            - { value: free, label: Free entry }
       - name: note
-        label: Hinweis (optional)
-        description: Kurzer Zusatz, z. B. „Mit Gästen“
+        label: Note (optional)
+        description: "Short extra info, e.g. “with guests”"
         type: string
 
-  # ------------------------------------------------------------------ Projekte
+  # ------------------------------------------------------------------ Projects
   - name: projects
-    label: Projekte
+    label: Projects
     type: collection
     path: content/projects
     exclude: [_index.md]
@@ -202,26 +202,26 @@ content:
         order: asc
     fields:
       - name: title
-        label: Titel
+        label: Title
         type: string
         required: true
       - name: subtitle
-        label: Untertitel
-        description: z. B. „Album“, „Duo mit Klavier“, „Solo-Programm“
+        label: Subtitle
+        description: "e.g. “Album”, “Duo with piano”, “Solo programme”"
         type: string
       - name: year
-        label: Jahr (optional)
+        label: Year (optional)
         type: string
       - name: weight
-        label: Reihenfolge
-        description: Kleinere Zahl = weiter vorne (in der Übersicht und im Menü).
+        label: Order
+        description: Lower number = further up (in the overview and in the menu).
         type: number
         default: 10
       - name: hero
         component: hero
       - name: cover
-        label: Cover / Bild neben dem Text (optional)
-        description: Quadratisch, z. B. Album-Cover. Erscheint links neben dem Text und in der Projektübersicht.
+        label: Cover / image next to the text (optional)
+        description: Square image, e.g. an album cover. Shown to the left of the text and in the project overview.
         type: image
         options:
           media: images
@@ -233,26 +233,26 @@ content:
       - name: buttons
         component: buttons
       - name: bandcamp
-        label: Bandcamp-Player (optional)
-        description: "Bei Bandcamp: Album → Teilen/Einbetten → Code kopieren und hier komplett einfügen (oder nur die Album-Nummer)."
+        label: Bandcamp player (optional)
+        description: "On Bandcamp: album → Share/Embed → copy the code and paste it here in full (or just the album number)."
         type: text
       - name: video
-        label: YouTube-Video (optional)
-        description: Link zum Video, z. B. https://www.youtube.com/watch?v=… – wird erst nach Klick geladen.
+        label: YouTube video (optional)
+        description: Link to the video, e.g. https://www.youtube.com/watch?v=… – only loads after a visitor clicks.
         type: string
       - name: bandcamp_url
-        label: Link zu Bandcamp (optional)
+        label: Link to Bandcamp (optional)
         type: string
       - name: faircamp_url
-        label: Faircamp-Link (optional, für später)
+        label: Faircamp link (optional, for later)
         type: string
       - name: links
-        label: Weitere Links (Streaming, Shop)
+        label: More links (streaming, shop)
         type: object
         list: true
         fields:
           - name: platform
-            label: Plattform
+            label: Platform
             type: select
             options:
               values:
@@ -261,37 +261,37 @@ content:
                 - { value: youtube, label: YouTube }
                 - { value: soundcloud, label: SoundCloud }
                 - { value: bandcamp, label: Bandcamp }
-                - { value: website, label: Andere Website / Shop }
+                - { value: website, label: Other website / shop }
           - name: label
-            label: Beschriftung (optional)
+            label: Label (optional)
             type: string
           - name: url
-            label: Adresse
+            label: Address
             type: string
       - name: tracklist
-        label: Titelliste (optional)
+        label: Tracklist (optional)
         type: string
         list: true
       - name: credits
-        label: Mitwirkende (optional)
-        description: "Eine Zeile pro Person, z. B. „Klavier: Name“"
+        label: Credits (optional)
+        description: "One line per person, e.g. “Piano: Name”"
         type: text
       - name: gallery_title
-        label: Überschrift über den Fotos (optional)
+        label: Heading above the photos (optional)
         type: string
       - name: gallery_style
         component: gallery_style
       - name: images
         component: gallery_images
 
-  # ------------------------------------------------------------------ Seiten
+  # ------------------------------------------------------------------ Pages
   - name: home
-    label: Startseite
+    label: Home page
     type: file
     path: content/_index.md
     fields:
       - name: title
-        label: Seitentitel
+        label: Page title
         type: string
         hidden: true
       - name: hero
@@ -301,40 +301,40 @@ content:
       - name: buttons
         component: buttons
       - name: concerts_count
-        label: Anzahl kommender Termine auf der Startseite
-        description: 0 = keine anzeigen
+        label: Number of upcoming concerts on the home page
+        description: 0 = don't show any
         type: number
         default: 3
       - name: show_newsletter
-        label: Newsletter-Anmeldung auf der Startseite zeigen
+        label: Show newsletter sign-up on the home page
         type: boolean
       - name: body
-        label: Zusätzlicher Text (optional)
+        label: Additional text (optional)
         type: rich-text
 
   - name: about
-    label: Über mich
+    label: About
     type: file
     path: content/about.md
     fields:
       - name: title
-        label: Titel
+        label: Title
         type: string
       - name: description
-        label: Kurzbeschreibung (für Google & Link-Vorschau)
+        label: Short description (for Google & link previews)
         type: string
       - name: hero
         component: hero
       - name: image
-        label: Porträtfoto
+        label: Portrait photo
         type: image
         options:
           media: images
       - name: image_alt
-        label: Bildbeschreibung (für blinde Menschen)
+        label: Image description (for blind visitors)
         type: string
       - name: image_credit
-        label: Fotograf*in
+        label: Photographer
         type: string
       - name: body
         label: Text
@@ -345,49 +345,49 @@ content:
         list: true
         fields:
           - name: label
-            label: Beschriftung
+            label: Label
             type: string
           - name: file
-            label: Datei
+            label: File
             type: file
             options:
               media: files
 
   - name: live_page
-    label: Termine – Seitenkopf
+    label: Concerts – page header
     type: file
     path: content/live/_index.md
     fields:
       - name: title
-        label: Titel
+        label: Title
         type: string
       - name: hero
         component: hero
       - name: body
-        label: Einleitungstext (optional)
+        label: Intro text (optional)
         type: rich-text
 
   - name: projects_page
-    label: Projekte – Übersichtsseite
+    label: Projects – overview page
     type: file
     path: content/projects/_index.md
     fields:
       - name: title
-        label: Titel
+        label: Title
         type: string
       - name: hero
         component: hero
       - name: body
-        label: Einleitungstext (optional)
+        label: Intro text (optional)
         type: rich-text
 
   - name: gallery
-    label: Galerie
+    label: Gallery
     type: file
     path: content/gallery.md
     fields:
       - name: title
-        label: Titel
+        label: Title
         type: string
       - name: layout
         type: string
@@ -400,16 +400,16 @@ content:
       - name: images
         component: gallery_images
       - name: body
-        label: Einleitungstext (optional)
+        label: Intro text (optional)
         type: rich-text
 
   - name: contact
-    label: Kontakt
+    label: Contact
     type: file
     path: content/contact.md
     fields:
       - name: title
-        label: Titel
+        label: Title
         type: string
       - name: layout
         type: string
@@ -418,203 +418,204 @@ content:
       - name: hero
         component: hero
       - name: body
-        label: Einleitungstext
+        label: Intro text
         type: rich-text
       - name: contacts
-        label: Ansprechpartner
+        label: Contacts
         type: object
         list: true
         fields:
           - name: label
-            label: Bereich
-            description: z. B. Allgemein, Booking, Presse
+            label: Area
+            description: e.g. General, Booking, Press
             type: string
           - name: name
             label: Name
             type: string
           - name: info
-            label: Zusatzinfo (optional)
+            label: Extra info (optional)
             type: string
           - name: email
-            label: E-Mail
+            label: Email
             type: string
           - name: phone
-            label: Telefon (optional)
+            label: Phone (optional)
             type: string
           - name: subject
-            label: Vorausgefüllter Betreff (optional)
+            label: Pre-filled email subject (optional)
             type: string
 
   - name: impressum
-    label: Impressum
+    label: Legal notice (Impressum)
     type: file
     path: content/impressum.md
     fields:
       - name: title
-        label: Titel
+        label: Title
+        description: Keep “Impressum” – that is the term German law expects.
         type: string
       - name: layout
         type: string
         hidden: true
         default: impressum
       - name: name
-        label: Vor- und Nachname
+        label: First and last name
         type: string
         required: true
       - name: business
-        label: Firmen- / Künstlername (optional)
+        label: Business / artist name (optional)
         type: string
       - name: address
-        label: Ladungsfähige Anschrift
-        description: Straße, PLZ Ort, Land – keine Postfachadresse.
+        label: Postal address
+        description: Street, postcode and city, country – no P.O. box. Required by German law.
         type: text
         required: true
       - name: email
-        label: E-Mail
+        label: Email
         type: string
         required: true
       - name: phone
-        label: Telefon (optional)
+        label: Phone (optional)
         type: string
       - name: vat_id
-        label: Umsatzsteuer-ID (falls vorhanden)
+        label: VAT ID (if you have one)
         type: string
       - name: responsible_name
-        label: Verantwortlich für den Inhalt (Name)
+        label: Person responsible for the content (name)
         type: string
       - name: responsible_address
-        label: Anschrift der verantwortlichen Person (leer = wie oben)
+        label: Address of the responsible person (empty = same as above)
         type: text
       - name: body
-        label: Weitere Angaben (optional)
+        label: Further information (optional)
         type: rich-text
 
   - name: datenschutz
-    label: Datenschutzerklärung
+    label: Privacy policy (Datenschutz)
     type: file
     path: content/datenschutz.md
     fields:
       - name: title
-        label: Titel
+        label: Title
         type: string
       - name: body
         label: Text
-        description: Text aus einem Datenschutz-Generator hier einfügen.
+        description: Paste the text from a privacy policy generator here.
         type: rich-text
 
-  # ------------------------------------------------------------------ Einstellungen
+  # ------------------------------------------------------------------ Settings
   - name: settings
-    label: Website-Einstellungen
+    label: Site settings
     type: file
     path: data/settings.yml
     format: yaml
     fields:
       - name: site_name
-        label: Name (erscheint oben auf jeder Seite)
+        label: Name (shown at the top of every page)
         type: string
         required: true
       - name: tagline
-        label: Untertitel
-        description: z. B. „Cello“ oder „Cellist & Komponist“
+        label: Tagline
+        description: "e.g. “Cello” or “Cellist & composer”"
         type: string
       - name: description
-        label: Kurzbeschreibung für Google
+        label: Short description for Google
         type: text
       - name: logo
-        label: Logo (optional, ersetzt den Namen im Kopf)
+        label: Logo (optional, replaces the name in the header)
         type: image
         options:
           media: images
       - name: favicon
-        label: Favicon (kleines Symbol im Browser-Tab, quadratisch)
+        label: Favicon (small square icon in the browser tab)
         type: image
         options:
           media: images
       - name: email
-        label: Haupt-E-Mail (Fußzeile)
+        label: Main email (footer)
         type: string
       - name: nav
-        label: Menü
+        label: Menu
         type: object
         list: true
         fields:
           - name: label
-            label: Beschriftung
+            label: Label
             type: string
           - name: url
             label: Link
             type: string
           - name: dropdown
-            label: Unterseiten als Untermenü zeigen
-            description: z. B. bei „Projekte“ – alle Projekte erscheinen automatisch im Menü.
+            label: Show sub-pages as a drop-down menu
+            description: "e.g. for “Projects” – all projects appear in the menu automatically."
             type: boolean
       - name: colors
-        label: Farben
-        description: Als Farbcode, z. B. #7a4b2a
+        label: Colours
+        description: "As a colour code, e.g. #ffffff for white."
         type: object
         fields:
           - name: background
-            label: Hintergrund
+            label: Background
             type: string
           - name: surface
-            label: Flächen (Kästen, Newsletter)
+            label: Boxes (contact cards, newsletter)
             type: string
           - name: text
             label: Text
             type: string
           - name: accent
-            label: Akzent (Links, Knöpfe)
+            label: Accent (links, buttons)
             type: string
       - name: fonts
-        label: Schriften
+        label: Fonts
         type: object
         fields:
           - name: heading
-            label: Überschriften
+            label: Headings
             type: object
             fields: &fontfields
               - name: preset
-                label: Schrift
+                label: Font
                 type: select
                 options:
                   values:
-                    - { value: cormorant, label: Cormorant Garamond (elegante Serifenschrift) }
-                    - { value: worksans, label: Work Sans (klare serifenlose Schrift) }
-                    - { value: serif, label: Systemschrift mit Serifen }
-                    - { value: sans, label: Systemschrift ohne Serifen }
-                    - { value: custom, label: Eigene Schrift (unten hochladen) }
+                    - { value: cormorant, label: Cormorant Garamond (elegant serif) }
+                    - { value: worksans, label: Work Sans (clean sans-serif) }
+                    - { value: serif, label: System serif font }
+                    - { value: sans, label: System sans-serif font }
+                    - { value: custom, label: Custom font (upload below) }
               - name: custom_name
-                label: Name der eigenen Schrift
+                label: Name of the custom font
                 type: string
               - name: regular
-                label: Datei normal (.woff2)
+                label: Regular file (.woff2)
                 type: file
                 options:
                   media: fonts
               - name: bold
-                label: Datei fett (optional)
+                label: Bold file (optional)
                 type: file
                 options:
                   media: fonts
               - name: italic
-                label: Datei kursiv (optional)
+                label: Italic file (optional)
                 type: file
                 options:
                   media: fonts
           - name: body
-            label: Fließtext
+            label: Body text
             type: object
             fields: *fontfields
           - name: heading_uppercase
-            label: Überschriften in Großbuchstaben
+            label: Headings in capital letters
             type: boolean
       - name: social
-        label: Social Media
+        label: Social media
         type: object
         list: true
         fields:
           - name: platform
-            label: Plattform
+            label: Platform
             type: select
             options:
               values:
@@ -630,29 +631,29 @@ content:
                 - { value: bluesky, label: Bluesky }
                 - { value: threads, label: Threads }
                 - { value: x, label: X }
-                - { value: website, label: Andere Website }
+                - { value: website, label: Other website }
           - name: url
-            label: Adresse
+            label: Address
             type: string
       - name: newsletter
         label: Newsletter
         type: object
         fields:
           - name: enabled
-            label: Newsletter-Anmeldung anzeigen
+            label: Show newsletter sign-up
             type: boolean
           - name: title
-            label: Überschrift
+            label: Heading
             type: string
           - name: text
             label: Text
             type: text
           - name: embed
-            label: Einbettungscode des Anbieters
-            description: Anmeldeformular-Code von Brevo, CleverReach o. ä. (Double-Opt-in aktivieren!)
+            label: Provider's embed code
+            description: Sign-up form code from Brevo, CleverReach or similar (turn on double opt-in!).
             type: code
             options:
               language: html
       - name: footer_text
-        label: Zusätzlicher Text in der Fußzeile (optional)
+        label: Extra text in the footer (optional)
         type: string

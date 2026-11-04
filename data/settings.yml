@@ -17,9 +17,9 @@ nav:
   - label: Kontakt
     url: /contact/
 colors:
-  background: "#f7f4ef"
-  surface: "#efe9e1"
-  text: "#1f1b18"
+  background: "#ffffff"
+  surface: "#f4f4f4"
+  text: "#141414"
   accent: "#7a4b2a"
 fonts:
   heading:

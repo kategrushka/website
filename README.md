@@ -6,7 +6,7 @@ A static website for a cellist. It's hosted for free on **GitHub Pages** and edi
 - **Built with:** [Hugo](https://gohugo.io) (runs only on GitHub's servers via GitHub Actions)
 - **Privacy:** no cookies, no tracking, fonts are self-hosted, and Bandcamp/YouTube only load after a click. No cookie banner is needed.
 
-The editor guide (German) is in **[EDITING.md](EDITING.md)**.
+The editor guide (English) is in **[EDITING.md](EDITING.md)**.
 
 ---
 

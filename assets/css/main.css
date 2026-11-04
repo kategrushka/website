@@ -87,27 +87,27 @@ a:hover { color: var(--c-accent); }
 .site-header__inner {
   max-width: var(--maxw);
   margin-inline: auto;
-  padding: 1.5rem var(--gutter) 1rem;
+  padding: 1.6rem var(--gutter);
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.9rem;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem 2.5rem;
 }
 .site-title {
   text-decoration: none;
   font-family: var(--font-heading);
-  font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.2rem);
-  letter-spacing: 0.22em;
+  font-size: clamp(1.15rem, 1rem + 0.5vw, 1.4rem);
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  line-height: 1.1;
-  text-align: center;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 .site-title:hover { color: inherit; }
-.site-title__logo { max-height: 80px; width: auto; }
+.site-title__logo { max-height: 56px; width: auto; }
 
 .site-nav__list {
   list-style: none; margin: 0; padding: 0;
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 2.2rem;
+  display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.4rem 1.8rem;
 }
 .site-nav__list a {
   text-decoration: none;
@@ -124,7 +124,7 @@ a:hover { color: var(--c-accent); }
 .site-nav__social { display: none; }
 .has-sub { position: relative; }
 .sub-nav { list-style: none; margin: 0; padding: 0; }
-@media (min-width: 761px) {
+@media (min-width: 901px) {
   .sub-nav {
     position: absolute; left: 50%; top: 100%; z-index: 60;
     min-width: 13rem; padding: 0.8rem 0; margin-top: 0.4rem;
@@ -153,13 +153,9 @@ a:hover { color: var(--c-accent); }
 .has-hero.hero-tone-light .site-header { color: #fff; }
 .has-hero.hero-tone-light .site-header a:hover { color: #fff; }
 
-@media (max-width: 760px) {
-  .site-header__inner {
-    flex-direction: row;
-    justify-content: space-between;
-    padding-block: 1.1rem;
-  }
-  .site-title { font-size: 1.25rem; letter-spacing: 0.16em; text-align: left; }
+@media (max-width: 900px) {
+  .site-header__inner { padding-block: 1.1rem; align-items: center; }
+  .site-title { font-size: 1.1rem; letter-spacing: 0.14em; white-space: normal; }
   .nav-toggle { display: inline-flex; position: relative; z-index: 60; }
   .site-nav {
     position: fixed; inset: 0; z-index: 55;

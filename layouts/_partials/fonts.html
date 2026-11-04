@@ -76,9 +76,9 @@
   --font-heading: {{ index $stacks "heading" | safeCSS }};
   --font-body: {{ index $stacks "body" | safeCSS }};
   --heading-transform: {{ if ($s.fonts | default dict).heading_uppercase }}uppercase{{ else }}none{{ end }};
-  --c-bg: {{ $c.background | default "#f7f4ef" | safeCSS }};
-  --c-surface: {{ $c.surface | default "#efe9e1" | safeCSS }};
-  --c-text: {{ $c.text | default "#1f1b18" | safeCSS }};
+  --c-bg: {{ $c.background | default "#ffffff" | safeCSS }};
+  --c-surface: {{ $c.surface | default "#f4f4f4" | safeCSS }};
+  --c-text: {{ $c.text | default "#141414" | safeCSS }};
   --c-accent: {{ $c.accent | default "#7a4b2a" | safeCSS }};
 }
 </style>
