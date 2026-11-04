@@ -1,0 +1,26 @@
+{{- /* Project overview: one card per project (order = "Reihenfolge" field). */ -}}
+{{ define "main" }}
+{{ partial "hero.html" . }}
+<div class="container">
+  {{- with .Content }}<div class="prose container--narrow intro center">{{ . }}</div>{{ end }}
+  <ul class="cards">
+    {{- range .Pages.ByWeight }}
+      {{- $img := .Params.cover | default (index (.Params.hero | default dict) "image") }}
+      {{- if and (not $img) .Params.images }}{{ $img = (index .Params.images 0).image }}{{ end }}
+    <li class="card">
+      <a href="{{ .RelPermalink }}">
+        <div class="card__media">
+          {{- with $img }}
+          {{ partial "img.html" (dict "src" . "alt" "" "crop" 1.25 "sizes" "(min-width: 900px) 30vw, (min-width: 560px) 45vw, 100vw" "widths" (slice 400 700 1000)) }}
+          {{- else }}<span class="card__placeholder">{{ partial "icon.html" "ui-music" }}</span>{{ end }}
+        </div>
+        <h2 class="card__title">{{ .Title }}</h2>
+        {{- if or .Params.subtitle .Params.year }}
+        <p class="card__meta">{{ .Params.subtitle }}{{ if and .Params.subtitle .Params.year }} · {{ end }}{{ .Params.year }}</p>
+        {{- end }}
+      </a>
+    </li>
+    {{- end }}
+  </ul>
+</div>
+{{ end }}

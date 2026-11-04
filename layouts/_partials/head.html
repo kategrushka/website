@@ -1,0 +1,44 @@
+{{- $s := hugo.Data.settings -}}
+{{- $hero := .Params.hero | default dict -}}
+{{- $title := cond .IsHome (printf "%s – %s" $s.site_name $s.tagline) (printf "%s | %s" .Title $s.site_name) -}}
+{{- $desc := .Description | default (.Params.summary | default $s.description) -}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $desc | plainify }}">
+<link rel="canonical" href="{{ .Permalink }}">
+{{- with $s.favicon }}
+  {{- with partial "getimage.html" . }}
+    {{- if eq .MediaType.SubType "svg" }}
+<link rel="icon" href="{{ .RelPermalink }}" type="image/svg+xml">
+    {{- else }}
+      {{- $ico := .Fill "64x64 png" }}
+      {{- $apple := .Fill "180x180 png" }}
+<link rel="icon" href="{{ $ico.RelPermalink }}" type="image/png">
+<link rel="apple-touch-icon" href="{{ $apple.RelPermalink }}">
+    {{- end }}
+  {{- end }}
+{{- else }}
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+{{- end }}
+
+{{- /* Open Graph (link previews in messengers / social media) */}}
+<meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $desc | plainify }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:locale" content="de_DE">
+{{- $ogsrc := .Params.cover | default (index $hero "image") | default (index (site.Home.Params.hero | default dict) "image") }}
+{{- with partial "getimage.html" $ogsrc }}
+  {{- if ne .MediaType.SubType "svg" }}
+    {{- $og := .Fill "1200x630 jpg q80" }}
+<meta property="og:image" content="{{ $og.Permalink }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+  {{- end }}
+{{- end }}
+
+{{ partial "fonts.html" . }}
+{{- $css := resources.Get "css/main.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">

@@ -1,0 +1,21 @@
+{{ define "main" }}
+{{ partial "hero.html" . }}
+<div class="container container--narrow">
+  {{- with .Content }}<div class="prose intro">{{ . }}</div>{{ end }}
+  {{- with .Params.contacts }}
+  <ul class="contacts">
+    {{- range . }}
+    {{- $c := . }}
+    <li class="contact-card">
+      {{- with .label }}<h2 class="small-title">{{ . }}</h2>{{ end }}
+      {{- with .name }}<p class="contact-card__name">{{ . }}</p>{{ end }}
+      {{- with .info }}<p class="contact-card__info">{{ . }}</p>{{ end }}
+      {{- with .email }}<p>{{ partial "email.html" (dict "email" . "subject" $c.subject "icon" true) }}</p>{{ end }}
+      {{- with .phone }}<p><a href="tel:{{ replaceRE `[^+\d]` "" . }}">{{ i18n "phone_label" }}: {{ . }}</a></p>{{ end }}
+    </li>
+    {{- end }}
+  </ul>
+  {{- end }}
+</div>
+{{ partial "newsletter.html" . }}
+{{ end }}

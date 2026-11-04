@@ -1,0 +1,52 @@
+site_name: Vorname Nachname
+tagline: Cello
+description: Offizielle Website – Konzerte, Musik, Biografie und Kontakt.
+logo: ""
+favicon: ""
+email: kontakt@example.com
+nav:
+  - label: Über mich
+    url: /about/
+  - label: Termine
+    url: /live/
+  - label: Projekte
+    url: /projects/
+    dropdown: true
+  - label: Galerie
+    url: /gallery/
+  - label: Kontakt
+    url: /contact/
+colors:
+  background: "#f7f4ef"
+  surface: "#efe9e1"
+  text: "#1f1b18"
+  accent: "#7a4b2a"
+fonts:
+  heading:
+    preset: cormorant
+    custom_name: ""
+    regular: ""
+    bold: ""
+    italic: ""
+  body:
+    preset: worksans
+    custom_name: ""
+    regular: ""
+    bold: ""
+    italic: ""
+  heading_uppercase: false
+social:
+  - platform: instagram
+    url: https://www.instagram.com/
+  - platform: youtube
+    url: https://www.youtube.com/
+  - platform: bandcamp
+    url: https://bandcamp.com/
+  - platform: spotify
+    url: https://open.spotify.com/
+newsletter:
+  enabled: false
+  title: Newsletter
+  text: Erfahre als Erstes von neuen Konzerten und Veröffentlichungen.
+  embed: ""
+footer_text: ""

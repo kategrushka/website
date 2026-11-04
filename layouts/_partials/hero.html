@@ -1,0 +1,42 @@
+{{- /*
+  Big header image (or a plain title when no image is set).
+  Front matter of any page:
+    hero:
+      image: /images/foo.jpg
+      position: center      # which part of the photo stays visible (e.g. "center top")
+      overlay: 40           # darkening in percent (0–80)
+      text_color: light     # light | dark
+      height: medium        # full | large | medium | small
+      headline: …           # default: page title
+      subline: …
+*/ -}}
+{{- $s := hugo.Data.settings -}}
+{{- $h := .Params.hero | default dict -}}
+{{- $defaultHeadline := cond .IsHome $s.site_name .Title -}}
+{{- $defaultSub := cond .IsHome $s.tagline "" -}}
+{{- $headline := index $h "headline" | default $defaultHeadline -}}
+{{- $sub := index $h "subline" | default $defaultSub -}}
+{{- with index $h "image" }}
+  {{- $height := index $h "height" | default (cond $.IsHome "full" "medium") }}
+  {{- $overlay := index $h "overlay" | default 35 }}
+  {{- $pos := index $h "position" | default "center" }}
+<section class="hero hero--{{ $height }} hero--{{ index $h "text_color" | default "light" }}">
+  <div class="hero__media">
+    {{ partial "img.html" (dict "src" . "alt" "" "class" "hero__img" "sizes" "100vw" "priority" true "style" (printf "object-position: %s" $pos)) }}
+  </div>
+  <div class="hero__overlay" style="{{ printf "--overlay: %.2f" (div (float $overlay) 100) | safeCSS }}"></div>
+  <div class="hero__content container">
+    {{- if $.IsHome }}
+    <h1 class="hero__title hero__title--home">{{ $headline }}</h1>
+    {{- else }}
+    <h1 class="hero__title">{{ $headline }}</h1>
+    {{- end }}
+    {{- with $sub }}<p class="hero__sub">{{ . }}</p>{{ end }}
+  </div>
+</section>
+{{- else }}
+<header class="page-header container">
+  <h1 class="page-header__title">{{ $headline }}</h1>
+  {{- with $sub }}<p class="page-header__sub">{{ . }}</p>{{ end }}
+</header>
+{{- end }}

@@ -1,0 +1,33 @@
+{{ define "main" }}
+{{ partial "hero.html" . }}
+{{- $today := now.Format "2006-01-02" }}
+{{- $upcoming := slice }}
+{{- $past := slice }}
+{{- range sort .Pages "Date" "asc" }}
+  {{- if ge (.Date.Format "2006-01-02") $today }}{{ $upcoming = $upcoming | append . }}{{ else }}{{ $past = $past | append . }}{{ end }}
+{{- end }}
+<div class="container container--narrow">
+  {{- with .Content }}<div class="prose intro">{{ . }}</div>{{ end }}
+
+  <section aria-labelledby="upcoming-title">
+    <h2 id="upcoming-title" class="section-title">{{ i18n "upcoming_concerts" }}</h2>
+    {{- with $upcoming }}
+    <ul class="concerts">
+      {{- range . }}{{ partial "concert.html" . }}{{ end }}
+    </ul>
+    {{ partial "concert-jsonld.html" . }}
+    {{- else }}
+    <p class="empty">{{ i18n "no_upcoming" }}</p>
+    {{- end }}
+  </section>
+
+  {{- with $past }}
+  <details class="past-concerts">
+    <summary class="section-title">{{ i18n "past_concerts" }} ({{ len . }})</summary>
+    <ul class="concerts concerts--past">
+      {{- range sort . "Date" "desc" }}{{ partial "concert.html" . }}{{ end }}
+    </ul>
+  </details>
+  {{- end }}
+</div>
+{{ end }}

@@ -1,0 +1,23 @@
+{{- /* Structured data so search engines can show concerts as events. Input: slice of concert pages. */ -}}
+{{- $s := hugo.Data.settings -}}
+{{- $events := slice -}}
+{{- range . -}}
+  {{- $p := .Params -}}
+  {{- $start := .Date.Format "2006-01-02" -}}
+  {{- with $p.time }}{{ $start = printf "%sT%s" $start . }}{{ end -}}
+  {{- $status := "https://schema.org/EventScheduled" -}}
+  {{- if eq $p.status "cancelled" }}{{ $status = "https://schema.org/EventCancelled" }}{{ end -}}
+  {{- $ev := dict
+    "@type" "MusicEvent"
+    "name" (.Title | default (printf "%s – %s" $s.site_name $p.city))
+    "startDate" $start
+    "eventStatus" $status
+    "location" (dict "@type" "Place" "name" ($p.venue | default $p.city) "address" (dict "@type" "PostalAddress" "addressLocality" $p.city))
+    "performer" (dict "@type" "Person" "name" $s.site_name)
+  -}}
+  {{- with $p.ticket_url }}{{ $ev = merge $ev (dict "offers" (dict "@type" "Offer" "url" .)) }}{{ end -}}
+  {{- $events = $events | append $ev -}}
+{{- end -}}
+{{- with $events }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" . | jsonify | safeJS }}</script>
+{{- end }}

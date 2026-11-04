@@ -1,0 +1,34 @@
+{{- /* Impressum (legal notice) – built from the structured fields in content/impressum.md */ -}}
+{{ define "main" }}
+{{- $p := .Params }}
+{{ partial "hero.html" . }}
+<div class="container container--narrow prose legal">
+  <h2>{{ i18n "imprint_heading" }}</h2>
+  <p>
+    {{ $p.name }}<br>
+    {{- with $p.business }}{{ . }}<br>{{ end }}
+    {{ $p.address | htmlEscape | replaceRE `\r?\n` "<br>" | safeHTML }}
+  </p>
+
+  <h2>{{ i18n "imprint_contact" }}</h2>
+  <p>
+    {{- with $p.phone }}{{ i18n "phone_label" }}: {{ . }}<br>{{ end }}
+    {{- with $p.email }}{{ i18n "email_label" }}: {{ partial "email.html" (dict "email" .) }}{{ end }}
+  </p>
+
+  {{- with $p.vat_id }}
+  <h2>{{ i18n "imprint_vat" }}</h2>
+  <p>{{ . }}</p>
+  {{- end }}
+
+  {{- if $p.responsible_name }}
+  <h2>{{ i18n "imprint_responsible" }}</h2>
+  <p>
+    {{ $p.responsible_name }}<br>
+    {{ $p.responsible_address | default $p.address | htmlEscape | replaceRE `\r?\n` "<br>" | safeHTML }}
+  </p>
+  {{- end }}
+
+  {{ .Content }}
+</div>
+{{ end }}

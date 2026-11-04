@@ -1,0 +1,10 @@
+{{- with . }}
+<section class="quotes container container--narrow" aria-label="Zitate">
+  {{- range . }}
+  <figure class="quote">
+    <blockquote><p>{{ .text }}</p></blockquote>
+    {{- with .source }}<figcaption>— {{ . }}</figcaption>{{ end }}
+  </figure>
+  {{- end }}
+</section>
+{{- end }}

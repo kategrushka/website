@@ -1,0 +1,8 @@
+{{- /* Stacked call-to-action buttons. Input: list of {label, url}. */ -}}
+{{- with . }}
+<nav class="cta-list container" aria-label="Links">
+  {{- range . }}
+  <a class="btn btn--wide" href="{{ partial "url.html" .url }}"{{ if hasPrefix .url "http" }} target="_blank" rel="noopener"{{ end }}>{{ .label }}</a>
+  {{- end }}
+</nav>
+{{- end }}

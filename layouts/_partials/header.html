@@ -1,0 +1,44 @@
+{{- $s := hugo.Data.settings -}}
+{{- $current := .RelPermalink -}}
+<header class="site-header" data-header>
+  <div class="site-header__inner">
+    <a class="site-title" href="{{ "" | relURL }}" aria-label="{{ $s.site_name }} – {{ i18n "home" }}">
+      {{- with partial "getimage.html" $s.logo -}}
+        {{- if eq .MediaType.SubType "svg" }}<img src="{{ .RelPermalink }}" alt="{{ $s.site_name }}" class="site-title__logo">
+        {{- else }}{{ $l := .Resize "x160 webp" }}<img src="{{ $l.RelPermalink }}" width="{{ div $l.Width 2 }}" height="80" alt="{{ $s.site_name }}" class="site-title__logo">{{ end -}}
+      {{- else -}}
+        <span class="site-title__name">{{ $s.site_name }}</span>
+      {{- end -}}
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle
+      data-label-open="{{ i18n "menu_open" }}" data-label-close="{{ i18n "menu_close" }}">
+      <span class="visually-hidden" data-nav-label>{{ i18n "menu_open" }}</span>
+      <span class="nav-toggle__open">{{ partial "icon.html" "ui-menu" }}</span>
+      <span class="nav-toggle__close">{{ partial "icon.html" "ui-close" }}</span>
+    </button>
+    <nav id="site-nav" class="site-nav" aria-label="Hauptmenü" data-nav>
+      <ul class="site-nav__list">
+        {{- range $s.nav }}
+          {{- $href := partial "url.html" .url }}
+          {{- $active := and (ne $href ("" | relURL)) (hasPrefix $current $href) }}
+          {{- /* "Unterseiten als Untermenü": list the pages of that section (e.g. all projects) */}}
+          {{- $sub := slice }}
+          {{- if .dropdown }}
+            {{- with site.GetPage (strings.TrimSuffix "/" .url) }}{{ $sub = .Pages.ByWeight }}{{ end }}
+          {{- end }}
+        <li{{ with $sub }} class="has-sub"{{ end }}>
+          <a href="{{ $href }}"{{ if eq $current $href }} aria-current="page"{{ else if $active }} class="is-active"{{ end }}>{{ .label }}</a>
+          {{- with $sub }}
+          <ul class="sub-nav">
+            {{- range . }}
+            <li><a href="{{ .RelPermalink }}"{{ if eq $current .RelPermalink }} aria-current="page"{{ end }}>{{ .Title }}</a></li>
+            {{- end }}
+          </ul>
+          {{- end }}
+        </li>
+        {{- end }}
+      </ul>
+      <div class="site-nav__social">{{ partial "social.html" . }}</div>
+    </nav>
+  </div>
+</header>

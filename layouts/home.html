@@ -1,0 +1,34 @@
+{{ define "main" }}
+{{ partial "hero.html" . }}
+
+{{ partial "quotes.html" .Params.quotes }}
+{{ partial "buttons.html" .Params.buttons }}
+
+{{- with .Content }}
+<section class="prose container container--narrow home-intro">{{ . }}</section>
+{{- end }}
+
+{{- $count := .Params.concerts_count | default 3 }}
+{{- with site.GetPage "/live" }}
+  {{- $live := . }}
+  {{- if gt $count 0 }}
+    {{- $today := now.Format "2006-01-02" }}
+    {{- $upcoming := slice }}
+    {{- range sort .Pages "Date" "asc" }}
+      {{- if ge (.Date.Format "2006-01-02") $today }}{{ $upcoming = $upcoming | append . }}{{ end }}
+    {{- end }}
+    {{- with $upcoming }}
+<section class="home-concerts container container--narrow" aria-labelledby="home-concerts-title">
+  <h2 id="home-concerts-title" class="section-title">{{ i18n "upcoming_concerts" }}</h2>
+  <ul class="concerts">
+    {{- range first $count . }}{{ partial "concert.html" . }}{{ end }}
+  </ul>
+  <p class="center"><a class="btn" href="{{ $live.RelPermalink }}">{{ i18n "all_dates" }}</a></p>
+  {{ partial "concert-jsonld.html" (first $count .) }}
+</section>
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- if .Params.show_newsletter }}{{ partial "newsletter.html" . }}{{ end }}
+{{ end }}

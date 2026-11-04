@@ -1,0 +1,16 @@
+{{- /*
+  Spam-protected e-mail link. The address is not written in plain text into the HTML;
+  a tiny script turns it into a normal clickable link. Without JavaScript visitors
+  still see "name [at] domain.de".
+  Usage: partial "email.html" (dict "email" "a@b.de" "subject" "Booking" "label" "Schreib mir" "class" "…")
+*/ -}}
+{{- $email := .email | default "" | string -}}
+{{- if strings.Contains $email "@" -}}
+  {{- $parts := split $email "@" -}}
+  {{- $user := index $parts 0 -}}
+  {{- $domain := index $parts 1 -}}
+  <a href="#" class="js-email{{ with .class }} {{ . }}{{ end }}" data-u="{{ base64Encode $user }}" data-d="{{ base64Encode $domain }}"
+    {{- with .subject }} data-s="{{ . }}"{{ end }}{{ if .label }} data-keep-label{{ end }}>
+    {{- if .icon }}{{ partial "icon.html" "ui-mail" }}{{ end -}}
+    <span class="js-email__text">{{ with .label }}{{ . }}{{ else }}{{ $user }} [at] {{ $domain }}{{ end }}</span></a>
+{{- end -}}

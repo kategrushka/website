@@ -1,0 +1,8 @@
+{{- /* Inline SVG icon from assets/icons/<name>.svg. "ui-*" icons are line icons. */ -}}
+{{- $name := . -}}
+{{- with resources.Get (printf "icons/%s.svg" $name) -}}
+  {{- $cls := cond (hasPrefix $name "ui-") "icon icon--line" "icon" -}}
+  {{- $svg := replaceRE `<title>.*?</title>` "" .Content -}}
+  {{- $svg = replace $svg "<svg" (printf `<svg aria-hidden="true" focusable="false" class="%s"` $cls) 1 -}}
+  {{- $svg | safeHTML -}}
+{{- end -}}

@@ -1,0 +1,13 @@
+{{- /*
+  Turns a link entered in the CMS into a working URL.
+  "/about/" -> correct path even if the site lives in a sub-folder (github.io/repo/).
+  External links (https://, mailto:, tel:, #anchor) are returned unchanged.
+*/ -}}
+{{- $u := . | default "" | string -}}
+{{- $out := "" -}}
+{{- if or (hasPrefix $u "http://") (hasPrefix $u "https://") (hasPrefix $u "mailto:") (hasPrefix $u "tel:") (hasPrefix $u "#") -}}
+  {{- $out = $u -}}
+{{- else -}}
+  {{- $out = strings.TrimPrefix "/" $u | relURL -}}
+{{- end -}}
+{{- return $out -}}

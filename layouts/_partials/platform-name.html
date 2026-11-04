@@ -1,0 +1,6 @@
+{{- $names := dict
+  "instagram" "Instagram" "facebook" "Facebook" "youtube" "YouTube" "spotify" "Spotify"
+  "bandcamp" "Bandcamp" "applemusic" "Apple Music" "tiktok" "TikTok" "soundcloud" "SoundCloud"
+  "mastodon" "Mastodon" "bluesky" "Bluesky" "threads" "Threads" "x" "X" "website" "Website"
+-}}
+{{- return (index $names . | default .) -}}

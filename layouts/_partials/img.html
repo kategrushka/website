@@ -1,0 +1,45 @@
+{{- /*
+  Responsive image. Usage:
+  partial "img.html" (dict "src" "/images/x.jpg" "alt" "…" "sizes" "100vw"
+                           "crop" 1.0 "class" "…" "style" "…" "priority" true "widths" (slice 480 960))
+  - crop: optional aspect ratio (width / height); the image is cropped to it.
+  - priority: load immediately (use for the first big image of a page).
+*/ -}}
+{{- $r := partial "getimage.html" .src -}}
+{{- $alt := .alt | default "" -}}
+{{- $class := .class | default "" -}}
+{{- $style := .style | default "" -}}
+{{- $sizes := .sizes | default "100vw" -}}
+{{- $priority := .priority | default false -}}
+{{- $widths := .widths | default (slice 480 960 1600 2400) -}}
+{{- $crop := .crop | default 0 -}}
+{{- with $r -}}
+  {{- if eq .MediaType.SubType "svg" -}}
+    <img src="{{ .RelPermalink }}" alt="{{ $alt }}"{{ with $class }} class="{{ . }}"{{ end }}{{ with $style }} style="{{ . | safeCSS }}"{{ end }}>
+  {{- else -}}
+    {{- $src := . -}}
+    {{- $set := slice -}}
+    {{- $last := false -}}
+    {{- $usable := slice -}}
+    {{- range $widths -}}
+      {{- if le . $src.Width -}}{{- $usable = $usable | append . -}}{{- end -}}
+    {{- end -}}
+    {{- if not $usable -}}{{- $usable = slice $src.Width -}}{{- end -}}
+    {{- range $usable -}}
+      {{- $img := false -}}
+      {{- if $crop -}}
+        {{- $h := int (math.Round (div (float .) $crop)) -}}
+        {{- $img = $src.Fill (printf "%dx%d webp q78" . $h) -}}
+      {{- else -}}
+        {{- $img = $src.Resize (printf "%dx webp q78" .) -}}
+      {{- end -}}
+      {{- $set = $set | append (printf "%s %dw" $img.RelPermalink .) -}}
+      {{- if or (not $last) (le . 1600) -}}{{- $last = $img -}}{{- end -}}
+    {{- end -}}
+    <img src="{{ $last.RelPermalink }}" srcset="{{ delimit $set ", " }}" sizes="{{ $sizes }}"
+      width="{{ $last.Width }}" height="{{ $last.Height }}" alt="{{ $alt }}"
+      {{- with $class }} class="{{ . }}"{{ end }}
+      {{- with $style }} style="{{ . | safeCSS }}"{{ end }}
+      {{- if $priority }} fetchpriority="high"{{ else }} loading="lazy"{{ end }} decoding="async">
+  {{- end -}}
+{{- end -}}

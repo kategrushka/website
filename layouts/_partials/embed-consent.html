@@ -1,0 +1,17 @@
+{{- /*
+  Two-click privacy solution for external players (Bandcamp, YouTube, …).
+  Nothing is loaded from the external service until the visitor clicks the button.
+  Usage: partial "embed-consent.html" (dict "provider" "Bandcamp" "src" "https://…" "title" "…" "height" 400)
+*/ -}}
+{{- $privacy := site.GetPage "/datenschutz" -}}
+<div class="embed" data-embed>
+  <div class="embed__consent">
+    {{ partial "icon.html" "ui-music" }}
+    <p>{{ printf (i18n "embed_notice") .provider }}
+      {{- with $privacy }} <a href="{{ .RelPermalink }}">{{ i18n "embed_privacy_link" }}</a>{{ end }}.</p>
+    <button type="button" class="btn btn--solid" data-embed-load
+      data-src="{{ .src }}" data-title="{{ .title }}"{{ with .ratio }} data-ratio="{{ . }}"{{ else }} data-height="{{ $.height | default 400 }}"{{ end }}>
+      {{ partial "icon.html" "ui-play" }} {{ i18n "embed_load" }}
+    </button>
+  </div>
+</div>

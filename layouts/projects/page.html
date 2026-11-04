@@ -1,0 +1,91 @@
+{{- /*
+  Project page. Every part is optional – only what is filled in is shown:
+  header image → cover + text (+ music links) → player / video → tracklist, credits
+  → quotes → buttons → image gallery.
+*/ -}}
+{{ define "main" }}
+{{- $p := .Params -}}
+{{- $accent := strings.TrimPrefix "#" (hugo.Data.settings.colors.accent | default "7a4b2a") -}}
+
+{{- /* Bandcamp: accepts either the album/track number or the complete embed code */ -}}
+{{- $raw := $p.bandcamp | default "" | string -}}
+{{- $kind := "album" -}}
+{{- $bcid := "" -}}
+{{- with findRESubmatch `(album|track)=(\d+)` $raw 1 -}}
+  {{- $kind = index (index . 0) 1 -}}
+  {{- $bcid = index (index . 0) 2 -}}
+{{- else -}}
+  {{- $trimmed := trim $raw " \n" -}}
+  {{- if findRE `^\d+$` $trimmed }}{{ $bcid = $trimmed }}{{ end -}}
+{{- end -}}
+{{- $tracks := len ($p.tracklist | default slice) -}}
+{{- $height := 442 -}}
+{{- if gt $tracks 0 }}{{ $height = add 120 (mul 33 (cond (gt $tracks 12) 12 $tracks)) }}{{ end -}}
+
+{{- /* YouTube: any normal video link works */ -}}
+{{- $ytid := "" -}}
+{{- with findRESubmatch `(?:v=|youtu\.be/|embed/|shorts/|live/)([A-Za-z0-9_-]{11})` ($p.video | default "" | string) 1 -}}
+  {{- $ytid = index (index . 0) 1 -}}
+{{- end -}}
+
+{{- $hasLinks := or $p.links $p.bandcamp_url $p.faircamp_url -}}
+
+{{ partial "hero.html" . }}
+<article class="container {{ if $p.cover }}project{{ else }}container--narrow{{ end }}">
+  {{- if $p.cover }}
+  <div class="project__aside">
+    <div class="project__cover">{{ partial "img.html" (dict "src" $p.cover "alt" (printf "Cover: %s" .Title) "crop" 1.0 "sizes" "(min-width: 900px) 40vw, 100vw" "widths" (slice 500 800 1200)) }}</div>
+    {{- if $hasLinks }}{{ partial "project-links.html" . }}{{ end }}
+  </div>
+  {{- end }}
+
+  <div class="project__main">
+    {{- if or $p.subtitle $p.year }}
+    <p class="project__meta">{{ $p.subtitle }}{{ if and $p.subtitle $p.year }} · {{ end }}{{ $p.year }}</p>
+    {{- end }}
+    <div class="prose">{{ .Content }}</div>
+
+    {{- if and $hasLinks (not $p.cover) }}{{ partial "project-links.html" . }}{{ end }}
+
+    {{- if $bcid }}
+    {{ partial "embed-consent.html" (dict
+        "provider" "Bandcamp (bandcamp.com)"
+        "title" (printf "Bandcamp-Player: %s" .Title)
+        "height" $height
+        "src" (printf "https://bandcamp.com/EmbeddedPlayer/%s=%s/size=large/bgcol=ffffff/linkcol=%s/artwork=none/tracklist=true/transparent=true/" $kind $bcid $accent)) }}
+    {{- end }}
+
+    {{- if $ytid }}
+    {{ partial "embed-consent.html" (dict
+        "provider" "YouTube (Google)"
+        "title" (printf "Video: %s" .Title)
+        "ratio" "16/9"
+        "src" (printf "https://www.youtube-nocookie.com/embed/%s" $ytid)) }}
+    {{- end }}
+
+    {{- with $p.tracklist }}
+    <h2 class="small-title">{{ i18n "tracklist" }}</h2>
+    <ol class="tracklist">
+      {{- range . }}<li>{{ . }}</li>{{ end }}
+    </ol>
+    {{- end }}
+
+    {{- with $p.credits }}
+    <h2 class="small-title">{{ i18n "credits" }}</h2>
+    <p class="credits">{{ trim . "\n " | htmlEscape | replaceRE `\r?\n` "<br>" | safeHTML }}</p>
+    {{- end }}
+  </div>
+</article>
+
+{{ partial "quotes.html" $p.quotes }}
+{{ partial "buttons.html" $p.buttons }}
+
+{{- with $p.images }}
+<section class="container project-gallery{{ if eq $p.gallery_style "stacked" }} container--narrow{{ end }}" aria-label="{{ $p.gallery_title | default "Bilder" }}">
+  {{- with $p.gallery_title }}<h2 class="section-title">{{ . }}</h2>{{ end }}
+  {{ partial "gallery-grid.html" (dict "images" . "style" $p.gallery_style) }}
+</section>
+{{- end }}
+
+<p class="container"><a class="back-link" href="{{ .Parent.RelPermalink }}">{{ partial "icon.html" "ui-back" }} {{ i18n "back_to_projects" }}</a></p>
+{{ end }}

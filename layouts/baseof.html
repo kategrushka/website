@@ -1,0 +1,26 @@
+{{- $hero := .Params.hero | default dict -}}
+{{- $hasHero := and (index $hero "image") true -}}
+{{- $heroTone := index $hero "text_color" | default "light" -}}
+<!doctype html>
+<html lang="{{ site.Language.Locale | default "de-DE" }}">
+<head>
+  {{- partial "head.html" . }}
+  {{- if .Params.images }}
+  {{- $pswp := resources.Get "vendor/photoswipe/photoswipe.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $pswp.RelPermalink }}">
+  {{- end }}
+  {{- block "head" . }}{{ end }}
+</head>
+<body class="{{ if $hasHero }}has-hero hero-tone-{{ $heroTone }}{{ else }}no-hero{{ end }} kind-{{ .Kind }}">
+  <a class="skip-link" href="#main">{{ i18n "skip_to_content" }}</a>
+  {{ partial "header.html" . }}
+  <main id="main" tabindex="-1">
+    {{- block "main" . }}{{ end }}
+  </main>
+  {{ partial "footer.html" . }}
+  {{- $js := resources.Get "js/main.js" | minify | fingerprint }}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+  {{- if .Params.images }}{{ partial "lightbox.html" . }}{{ end }}
+  {{- block "scripts" . }}{{ end }}
+</body>
+</html>

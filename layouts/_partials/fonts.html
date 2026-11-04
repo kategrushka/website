@@ -1,0 +1,84 @@
+{{- /*
+  Fonts and colours from data/settings.yml (Pages CMS: "Website-Einstellungen").
+  All fonts are served from this website itself – no Google Fonts (GDPR).
+*/ -}}
+{{- $s := hugo.Data.settings -}}
+{{- $presets := dict
+  "cormorant" (dict
+    "family" "Cormorant Garamond"
+    "fallback" "Georgia, 'Times New Roman', serif"
+    "faces" (slice
+      (dict "file" "fonts/cormorant-garamond-latin-400-normal.woff2" "weight" "400" "style" "normal")
+      (dict "file" "fonts/cormorant-garamond-latin-400-italic.woff2" "weight" "400" "style" "italic")
+      (dict "file" "fonts/cormorant-garamond-latin-600-normal.woff2" "weight" "600 700" "style" "normal")))
+  "worksans" (dict
+    "family" "Work Sans"
+    "fallback" "system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif"
+    "faces" (slice
+      (dict "file" "fonts/work-sans-latin-400-normal.woff2" "weight" "400" "style" "normal")
+      (dict "file" "fonts/work-sans-latin-400-italic.woff2" "weight" "400" "style" "italic")
+      (dict "file" "fonts/work-sans-latin-500-normal.woff2" "weight" "500" "style" "normal")
+      (dict "file" "fonts/work-sans-latin-600-normal.woff2" "weight" "600 700" "style" "normal")))
+  "serif" (dict "family" "" "fallback" "Georgia, 'Times New Roman', serif" "faces" (slice))
+  "sans" (dict "family" "" "fallback" "system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" "faces" (slice))
+-}}
+{{- $faces := slice -}}
+{{- $stacks := dict -}}
+{{- range $role := slice "heading" "body" -}}
+  {{- $cfg := index ($s.fonts | default dict) $role | default dict -}}
+  {{- $preset := index $cfg "preset" | default (cond (eq $role "heading") "cormorant" "worksans") -}}
+  {{- $family := "" -}}
+  {{- $fallback := "" -}}
+  {{- if and (eq $preset "custom") (index $cfg "custom_name") (index $cfg "regular") -}}
+    {{- $family = index $cfg "custom_name" -}}
+    {{- $fallback = cond (eq $role "heading") "Georgia, serif" "system-ui, sans-serif" -}}
+    {{- $list := slice (dict "file" (index $cfg "regular") "weight" "400" "style" "normal") -}}
+    {{- with index $cfg "bold" }}{{ $list = $list | append (dict "file" . "weight" "600 700" "style" "normal") }}{{ end -}}
+    {{- with index $cfg "italic" }}{{ $list = $list | append (dict "file" . "weight" "400" "style" "italic") }}{{ end -}}
+    {{- range $list -}}
+      {{- $faces = $faces | append (dict "family" $family "file" .file "weight" .weight "style" .style) -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $p := index $presets $preset | default (index $presets (cond (eq $role "heading") "cormorant" "worksans")) -}}
+    {{- $family = $p.family -}}
+    {{- $fallback = $p.fallback -}}
+    {{- range $p.faces -}}
+      {{- $faces = $faces | append (dict "family" $family "file" .file "weight" .weight "style" .style) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $stack := $fallback -}}
+  {{- with $family }}{{ $stack = printf "'%s', %s" . $fallback }}{{ end -}}
+  {{- $stacks = merge $stacks (dict $role $stack) -}}
+{{- end -}}
+{{- /* de-duplicate faces (same preset for heading and body) */ -}}
+{{- $seen := dict -}}
+{{- $unique := slice -}}
+{{- range $faces -}}
+  {{- $k := printf "%s|%s|%s" .family .weight .style -}}
+  {{- if not (index $seen $k) -}}
+    {{- $seen = merge $seen (dict $k true) -}}
+    {{- $unique = $unique | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- $c := $s.colors | default dict -}}
+{{- range $unique }}
+  {{- if and (eq .weight "400") (eq .style "normal") }}
+<link rel="preload" href="{{ partial "url.html" .file }}" as="font" type="font/{{ cond (hasSuffix .file ".woff") "woff" (cond (hasSuffix .file ".ttf") "ttf" (cond (hasSuffix .file ".otf") "otf" "woff2")) }}" crossorigin>
+  {{- end }}
+{{- end }}
+<style>
+{{- range $unique }}
+  {{- $fmt := "woff2" -}}
+  {{- if hasSuffix .file ".woff" }}{{ $fmt = "woff" }}{{ else if hasSuffix .file ".ttf" }}{{ $fmt = "truetype" }}{{ else if hasSuffix .file ".otf" }}{{ $fmt = "opentype" }}{{ end }}
+@font-face{font-family:'{{ .family | safeCSS }}';src:url('{{ partial "url.html" .file | safeCSS }}') format('{{ $fmt }}');font-weight:{{ .weight | safeCSS }};font-style:{{ .style }};font-display:swap}
+{{- end }}
+:root{
+  --font-heading: {{ index $stacks "heading" | safeCSS }};
+  --font-body: {{ index $stacks "body" | safeCSS }};
+  --heading-transform: {{ if ($s.fonts | default dict).heading_uppercase }}uppercase{{ else }}none{{ end }};
+  --c-bg: {{ $c.background | default "#f7f4ef" | safeCSS }};
+  --c-surface: {{ $c.surface | default "#efe9e1" | safeCSS }};
+  --c-text: {{ $c.text | default "#1f1b18" | safeCSS }};
+  --c-accent: {{ $c.accent | default "#7a4b2a" | safeCSS }};
+}
+</style>

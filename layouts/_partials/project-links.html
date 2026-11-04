@@ -1,0 +1,11 @@
+{{- $p := .Params -}}
+<div class="project__links">
+  <h2 class="small-title">{{ i18n "stream_buy" }}</h2>
+  <ul class="link-list">
+    {{- with $p.bandcamp_url }}<li><a class="btn btn--small" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" "bandcamp" }} Bandcamp</a></li>{{ end }}
+    {{- with $p.faircamp_url }}<li><a class="btn btn--small" href="{{ partial "url.html" . }}">{{ partial "icon.html" "ui-music" }} Download / Stream</a></li>{{ end }}
+    {{- range $p.links }}
+    <li><a class="btn btn--small" href="{{ .url }}" target="_blank" rel="noopener">{{ partial "icon.html" (cond (eq .platform "website") "ui-link" .platform) }} {{ .label | default (partial "platform-name.html" .platform) }}</a></li>
+    {{- end }}
+  </ul>
+</div>

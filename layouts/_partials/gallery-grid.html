@@ -1,0 +1,44 @@
+{{- /*
+  Image gallery with lightbox. Used on the "Galerie" page and on project pages.
+  Usage: partial "gallery-grid.html" (dict "images" .Params.images "style" "grid")
+  style: grid (square crops) | masonry (original format) | stacked (large, one below the other, captions visible)
+*/ -}}
+{{- $style := .style | default "grid" -}}
+{{- with .images }}
+<div class="gallery gallery--{{ $style }}" data-gallery>
+  {{- range . }}
+    {{- $item := . }}
+    {{- with partial "getimage.html" .image }}
+      {{- $large := . }}
+      {{- if gt .Width 2000 }}{{ $large = .Resize "2000x webp q82" }}{{ else }}{{ $large = .Process "webp q82" }}{{ end }}
+      {{- $t1 := false }}{{ $t2 := false }}{{ $sizes := "(min-width: 1100px) 25vw, (min-width: 700px) 33vw, 50vw" }}
+      {{- if eq $style "grid" }}
+        {{- $t1 = .Fill "400x400 webp q75" }}{{ $t2 = .Fill "800x800 webp q75" }}
+      {{- else if eq $style "stacked" }}
+        {{- $t1 = .Resize (printf "%dx webp q78" (cond (lt .Width 800) .Width 800)) }}{{ $t2 = .Resize (printf "%dx webp q78" (cond (lt .Width 1400) .Width 1400)) }}
+        {{- $sizes = "(min-width: 1000px) 920px, 100vw" }}
+      {{- else }}
+        {{- $t1 = .Resize "400x webp q75" }}{{ $t2 = .Resize "800x webp q75" }}
+      {{- end }}
+  <figure class="gallery__figure">
+    <a class="gallery__item" href="{{ $large.RelPermalink }}" data-pswp-width="{{ $large.Width }}" data-pswp-height="{{ $large.Height }}" aria-label="{{ i18n "gallery_open" }}: {{ $item.alt }}">
+      <img src="{{ $t2.RelPermalink }}" srcset="{{ $t1.RelPermalink }} {{ $t1.Width }}w, {{ $t2.RelPermalink }} {{ $t2.Width }}w"
+        sizes="{{ $sizes }}" width="{{ $t2.Width }}" height="{{ $t2.Height }}" alt="{{ $item.alt }}" loading="lazy" decoding="async">
+      {{- if or $item.caption $item.credit }}
+      <span class="gallery__caption" hidden>
+        {{- with $item.caption }}{{ . }}{{ end }}
+        {{- with $item.credit }}<small>{{ i18n "photo_by" }}: {{ . }}</small>{{ end -}}
+      </span>
+      {{- end }}
+    </a>
+    {{- if and (eq $style "stacked") (or $item.caption $item.credit) }}
+    <figcaption>
+      {{- with $item.caption }}{{ . }}{{ end }}
+      {{- with $item.credit }} <span class="credit">{{ i18n "photo_by" }}: {{ . }}</span>{{ end -}}
+    </figcaption>
+    {{- end }}
+  </figure>
+    {{- end }}
+  {{- end }}
+</div>
+{{- end }}

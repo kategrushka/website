@@ -1,0 +1,30 @@
+{{- $p := .Params -}}
+{{- $status := $p.status | default "normal" -}}
+<li class="concert concert--{{ $status }}">
+  <time class="concert__date" datetime="{{ .Date.Format "2006-01-02" }}{{ with $p.time }}T{{ . }}{{ end }}">
+    <span class="concert__day">{{ .Date.Format "02" }}</span>
+    <span class="concert__month">{{ time.Format "Jan 2006" .Date }}</span>
+  </time>
+  <div class="concert__info">
+    <p class="concert__place">
+      <strong>{{ $p.city }}</strong>{{ with $p.venue }} · {{ . }}{{ end }}
+    </p>
+    {{- with .Title }}<p class="concert__title">{{ . }}</p>{{ end }}
+    <p class="concert__meta">
+      {{- time.Format "Monday" .Date }}{{ with $p.time }}, {{ . }}{{ with i18n "time_suffix" }} {{ . }}{{ end }}{{ end -}}
+      {{- with $p.note }} · {{ . }}{{ end -}}
+    </p>
+  </div>
+  <div class="concert__action">
+    {{- if eq $status "cancelled" }}
+      <span class="badge">{{ i18n "cancelled" }}</span>
+    {{- else if eq $status "soldout" }}
+      <span class="badge">{{ i18n "sold_out" }}</span>
+    {{- else if eq $status "free" }}
+      <span class="badge badge--soft">{{ i18n "free_entry" }}</span>
+      {{- with $p.ticket_url }}<a class="btn btn--small" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "more_info" }}</a>{{ end }}
+    {{- else }}
+      {{- with $p.ticket_url }}<a class="btn btn--small" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "tickets" }}</a>{{ end }}
+    {{- end }}
+  </div>
+</li>

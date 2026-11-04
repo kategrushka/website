@@ -1,0 +1,658 @@
+# Pages CMS configuration (https://pagescms.org)
+# Defines the editing forms. Editors never need to touch this file.
+
+media:
+  - name: images
+    label: Bilder
+    input: assets/images
+    output: /images
+    categories: [image]
+  - name: files
+    label: Dateien (PDF)
+    input: static/files
+    output: /files
+    categories: [document]
+  - name: fonts
+    label: Schriftarten
+    input: static/fonts
+    output: /fonts
+    extensions: [woff2, woff, ttf, otf]
+
+components:
+  hero:
+    type: object
+    label: Titelbild
+    description: Großes Foto oben auf der Seite. Leer lassen für eine schlichte Überschrift.
+    fields:
+      - name: image
+        label: Bild
+        type: image
+        options:
+          media: images
+      - name: position
+        label: Bildausschnitt
+        description: Welcher Teil des Fotos sichtbar bleibt, wenn es zugeschnitten wird.
+        type: select
+        default: center
+        options:
+          values:
+            - { value: center, label: Mitte }
+            - { value: center top, label: Oben }
+            - { value: center bottom, label: Unten }
+            - { value: left center, label: Links }
+            - { value: right center, label: Rechts }
+      - name: overlay
+        label: Abdunkeln (%)
+        description: Macht Schrift auf hellen Fotos besser lesbar. 0 = gar nicht, 80 = stark.
+        type: number
+        default: 35
+        options:
+          min: 0
+          max: 80
+      - name: text_color
+        label: Schriftfarbe auf dem Bild
+        type: select
+        default: light
+        options:
+          values:
+            - { value: light, label: Hell (für dunkle Fotos) }
+            - { value: dark, label: Dunkel (für helle Fotos) }
+      - name: height
+        label: Höhe
+        type: select
+        default: medium
+        options:
+          values:
+            - { value: full, label: Ganzer Bildschirm }
+            - { value: large, label: Groß }
+            - { value: medium, label: Mittel }
+            - { value: small, label: Klein }
+      - name: headline
+        label: Überschrift (optional)
+        description: Leer lassen = Seitentitel bzw. Name.
+        type: string
+      - name: subline
+        label: Unterzeile (optional)
+        type: string
+
+  quotes:
+    type: object
+    label: Zitate
+    list: true
+    fields:
+      - name: text
+        label: Zitat
+        type: text
+      - name: source
+        label: Quelle
+        type: string
+  buttons:
+    type: object
+    label: Knöpfe
+    description: z. B. „Termine“ → /live/ oder ein externer Link https://…
+    list: true
+    fields:
+      - name: label
+        label: Beschriftung
+        type: string
+      - name: url
+        label: Link
+        type: string
+  gallery_style:
+    type: select
+    label: Darstellung der Fotos
+    default: grid
+    options:
+      values:
+        - { value: grid, label: Raster (quadratisch zugeschnitten) }
+        - { value: masonry, label: Mauerwerk (Originalformat) }
+        - { value: stacked, label: Untereinander, groß mit Bildunterschrift }
+  gallery_images:
+    type: object
+    label: Fotos
+    description: Reihenfolge per Ziehen ändern. Nur Fotos verwenden, für die eine Nutzungserlaubnis vorliegt.
+    list: true
+    fields:
+      - name: image
+        label: Foto
+        type: image
+        required: true
+        options:
+          media: images
+      - name: alt
+        label: Bildbeschreibung (für blinde Menschen)
+        description: Was ist zu sehen? z. B. „Auf der Bühne mit Cello, warmes Licht“
+        type: string
+        required: true
+      - name: caption
+        label: Bildunterschrift (optional)
+        type: string
+      - name: credit
+        label: Fotograf*in
+        type: string
+        required: true
+
+content:
+  # ------------------------------------------------------------------ Termine
+  - name: concerts
+    label: Termine
+    type: collection
+    path: content/live
+    exclude: [_index.md]
+    filename: "{year}-{month}-{day}-{primary}.md"
+    view:
+      fields: [date, city, title, status]
+      primary: city
+      sort: [date, city]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: date
+        label: Datum
+        type: date
+        required: true
+      - name: time
+        label: Uhrzeit
+        description: z. B. 19:30
+        type: string
+      - name: city
+        label: Stadt
+        type: string
+        required: true
+      - name: venue
+        label: Ort / Saal
+        type: string
+      - name: title
+        label: Programm / Titel
+        description: z. B. „Bach & Gegenwart“ oder „Duo mit Klavier“
+        type: string
+      - name: ticket_url
+        label: Ticket-Link
+        description: Vollständige Adresse, beginnend mit https://
+        type: string
+      - name: status
+        label: Status
+        type: select
+        default: normal
+        options:
+          values:
+            - { value: normal, label: Normal }
+            - { value: soldout, label: Ausverkauft }
+            - { value: cancelled, label: Abgesagt }
+            - { value: free, label: Eintritt frei }
+      - name: note
+        label: Hinweis (optional)
+        description: Kurzer Zusatz, z. B. „Mit Gästen“
+        type: string
+
+  # ------------------------------------------------------------------ Projekte
+  - name: projects
+    label: Projekte
+    type: collection
+    path: content/projects
+    exclude: [_index.md]
+    filename: "{primary}.md"
+    view:
+      fields: [title, subtitle, weight]
+      primary: title
+      sort: [weight, title]
+      default:
+        sort: weight
+        order: asc
+    fields:
+      - name: title
+        label: Titel
+        type: string
+        required: true
+      - name: subtitle
+        label: Untertitel
+        description: z. B. „Album“, „Duo mit Klavier“, „Solo-Programm“
+        type: string
+      - name: year
+        label: Jahr (optional)
+        type: string
+      - name: weight
+        label: Reihenfolge
+        description: Kleinere Zahl = weiter vorne (in der Übersicht und im Menü).
+        type: number
+        default: 10
+      - name: hero
+        component: hero
+      - name: cover
+        label: Cover / Bild neben dem Text (optional)
+        description: Quadratisch, z. B. Album-Cover. Erscheint links neben dem Text und in der Projektübersicht.
+        type: image
+        options:
+          media: images
+      - name: body
+        label: Text
+        type: rich-text
+      - name: quotes
+        component: quotes
+      - name: buttons
+        component: buttons
+      - name: bandcamp
+        label: Bandcamp-Player (optional)
+        description: "Bei Bandcamp: Album → Teilen/Einbetten → Code kopieren und hier komplett einfügen (oder nur die Album-Nummer)."
+        type: text
+      - name: video
+        label: YouTube-Video (optional)
+        description: Link zum Video, z. B. https://www.youtube.com/watch?v=… – wird erst nach Klick geladen.
+        type: string
+      - name: bandcamp_url
+        label: Link zu Bandcamp (optional)
+        type: string
+      - name: faircamp_url
+        label: Faircamp-Link (optional, für später)
+        type: string
+      - name: links
+        label: Weitere Links (Streaming, Shop)
+        type: object
+        list: true
+        fields:
+          - name: platform
+            label: Plattform
+            type: select
+            options:
+              values:
+                - { value: spotify, label: Spotify }
+                - { value: applemusic, label: Apple Music }
+                - { value: youtube, label: YouTube }
+                - { value: soundcloud, label: SoundCloud }
+                - { value: bandcamp, label: Bandcamp }
+                - { value: website, label: Andere Website / Shop }
+          - name: label
+            label: Beschriftung (optional)
+            type: string
+          - name: url
+            label: Adresse
+            type: string
+      - name: tracklist
+        label: Titelliste (optional)
+        type: string
+        list: true
+      - name: credits
+        label: Mitwirkende (optional)
+        description: "Eine Zeile pro Person, z. B. „Klavier: Name“"
+        type: text
+      - name: gallery_title
+        label: Überschrift über den Fotos (optional)
+        type: string
+      - name: gallery_style
+        component: gallery_style
+      - name: images
+        component: gallery_images
+
+  # ------------------------------------------------------------------ Seiten
+  - name: home
+    label: Startseite
+    type: file
+    path: content/_index.md
+    fields:
+      - name: title
+        label: Seitentitel
+        type: string
+        hidden: true
+      - name: hero
+        component: hero
+      - name: quotes
+        component: quotes
+      - name: buttons
+        component: buttons
+      - name: concerts_count
+        label: Anzahl kommender Termine auf der Startseite
+        description: 0 = keine anzeigen
+        type: number
+        default: 3
+      - name: show_newsletter
+        label: Newsletter-Anmeldung auf der Startseite zeigen
+        type: boolean
+      - name: body
+        label: Zusätzlicher Text (optional)
+        type: rich-text
+
+  - name: about
+    label: Über mich
+    type: file
+    path: content/about.md
+    fields:
+      - name: title
+        label: Titel
+        type: string
+      - name: description
+        label: Kurzbeschreibung (für Google & Link-Vorschau)
+        type: string
+      - name: hero
+        component: hero
+      - name: image
+        label: Porträtfoto
+        type: image
+        options:
+          media: images
+      - name: image_alt
+        label: Bildbeschreibung (für blinde Menschen)
+        type: string
+      - name: image_credit
+        label: Fotograf*in
+        type: string
+      - name: body
+        label: Text
+        type: rich-text
+      - name: downloads
+        label: Downloads
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Beschriftung
+            type: string
+          - name: file
+            label: Datei
+            type: file
+            options:
+              media: files
+
+  - name: live_page
+    label: Termine – Seitenkopf
+    type: file
+    path: content/live/_index.md
+    fields:
+      - name: title
+        label: Titel
+        type: string
+      - name: hero
+        component: hero
+      - name: body
+        label: Einleitungstext (optional)
+        type: rich-text
+
+  - name: projects_page
+    label: Projekte – Übersichtsseite
+    type: file
+    path: content/projects/_index.md
+    fields:
+      - name: title
+        label: Titel
+        type: string
+      - name: hero
+        component: hero
+      - name: body
+        label: Einleitungstext (optional)
+        type: rich-text
+
+  - name: gallery
+    label: Galerie
+    type: file
+    path: content/gallery.md
+    fields:
+      - name: title
+        label: Titel
+        type: string
+      - name: layout
+        type: string
+        hidden: true
+        default: gallery
+      - name: hero
+        component: hero
+      - name: style
+        component: gallery_style
+      - name: images
+        component: gallery_images
+      - name: body
+        label: Einleitungstext (optional)
+        type: rich-text
+
+  - name: contact
+    label: Kontakt
+    type: file
+    path: content/contact.md
+    fields:
+      - name: title
+        label: Titel
+        type: string
+      - name: layout
+        type: string
+        hidden: true
+        default: contact
+      - name: hero
+        component: hero
+      - name: body
+        label: Einleitungstext
+        type: rich-text
+      - name: contacts
+        label: Ansprechpartner
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Bereich
+            description: z. B. Allgemein, Booking, Presse
+            type: string
+          - name: name
+            label: Name
+            type: string
+          - name: info
+            label: Zusatzinfo (optional)
+            type: string
+          - name: email
+            label: E-Mail
+            type: string
+          - name: phone
+            label: Telefon (optional)
+            type: string
+          - name: subject
+            label: Vorausgefüllter Betreff (optional)
+            type: string
+
+  - name: impressum
+    label: Impressum
+    type: file
+    path: content/impressum.md
+    fields:
+      - name: title
+        label: Titel
+        type: string
+      - name: layout
+        type: string
+        hidden: true
+        default: impressum
+      - name: name
+        label: Vor- und Nachname
+        type: string
+        required: true
+      - name: business
+        label: Firmen- / Künstlername (optional)
+        type: string
+      - name: address
+        label: Ladungsfähige Anschrift
+        description: Straße, PLZ Ort, Land – keine Postfachadresse.
+        type: text
+        required: true
+      - name: email
+        label: E-Mail
+        type: string
+        required: true
+      - name: phone
+        label: Telefon (optional)
+        type: string
+      - name: vat_id
+        label: Umsatzsteuer-ID (falls vorhanden)
+        type: string
+      - name: responsible_name
+        label: Verantwortlich für den Inhalt (Name)
+        type: string
+      - name: responsible_address
+        label: Anschrift der verantwortlichen Person (leer = wie oben)
+        type: text
+      - name: body
+        label: Weitere Angaben (optional)
+        type: rich-text
+
+  - name: datenschutz
+    label: Datenschutzerklärung
+    type: file
+    path: content/datenschutz.md
+    fields:
+      - name: title
+        label: Titel
+        type: string
+      - name: body
+        label: Text
+        description: Text aus einem Datenschutz-Generator hier einfügen.
+        type: rich-text
+
+  # ------------------------------------------------------------------ Einstellungen
+  - name: settings
+    label: Website-Einstellungen
+    type: file
+    path: data/settings.yml
+    format: yaml
+    fields:
+      - name: site_name
+        label: Name (erscheint oben auf jeder Seite)
+        type: string
+        required: true
+      - name: tagline
+        label: Untertitel
+        description: z. B. „Cello“ oder „Cellist & Komponist“
+        type: string
+      - name: description
+        label: Kurzbeschreibung für Google
+        type: text
+      - name: logo
+        label: Logo (optional, ersetzt den Namen im Kopf)
+        type: image
+        options:
+          media: images
+      - name: favicon
+        label: Favicon (kleines Symbol im Browser-Tab, quadratisch)
+        type: image
+        options:
+          media: images
+      - name: email
+        label: Haupt-E-Mail (Fußzeile)
+        type: string
+      - name: nav
+        label: Menü
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Beschriftung
+            type: string
+          - name: url
+            label: Link
+            type: string
+          - name: dropdown
+            label: Unterseiten als Untermenü zeigen
+            description: z. B. bei „Projekte“ – alle Projekte erscheinen automatisch im Menü.
+            type: boolean
+      - name: colors
+        label: Farben
+        description: Als Farbcode, z. B. #7a4b2a
+        type: object
+        fields:
+          - name: background
+            label: Hintergrund
+            type: string
+          - name: surface
+            label: Flächen (Kästen, Newsletter)
+            type: string
+          - name: text
+            label: Text
+            type: string
+          - name: accent
+            label: Akzent (Links, Knöpfe)
+            type: string
+      - name: fonts
+        label: Schriften
+        type: object
+        fields:
+          - name: heading
+            label: Überschriften
+            type: object
+            fields: &fontfields
+              - name: preset
+                label: Schrift
+                type: select
+                options:
+                  values:
+                    - { value: cormorant, label: Cormorant Garamond (elegante Serifenschrift) }
+                    - { value: worksans, label: Work Sans (klare serifenlose Schrift) }
+                    - { value: serif, label: Systemschrift mit Serifen }
+                    - { value: sans, label: Systemschrift ohne Serifen }
+                    - { value: custom, label: Eigene Schrift (unten hochladen) }
+              - name: custom_name
+                label: Name der eigenen Schrift
+                type: string
+              - name: regular
+                label: Datei normal (.woff2)
+                type: file
+                options:
+                  media: fonts
+              - name: bold
+                label: Datei fett (optional)
+                type: file
+                options:
+                  media: fonts
+              - name: italic
+                label: Datei kursiv (optional)
+                type: file
+                options:
+                  media: fonts
+          - name: body
+            label: Fließtext
+            type: object
+            fields: *fontfields
+          - name: heading_uppercase
+            label: Überschriften in Großbuchstaben
+            type: boolean
+      - name: social
+        label: Social Media
+        type: object
+        list: true
+        fields:
+          - name: platform
+            label: Plattform
+            type: select
+            options:
+              values:
+                - { value: instagram, label: Instagram }
+                - { value: facebook, label: Facebook }
+                - { value: youtube, label: YouTube }
+                - { value: spotify, label: Spotify }
+                - { value: bandcamp, label: Bandcamp }
+                - { value: applemusic, label: Apple Music }
+                - { value: soundcloud, label: SoundCloud }
+                - { value: tiktok, label: TikTok }
+                - { value: mastodon, label: Mastodon }
+                - { value: bluesky, label: Bluesky }
+                - { value: threads, label: Threads }
+                - { value: x, label: X }
+                - { value: website, label: Andere Website }
+          - name: url
+            label: Adresse
+            type: string
+      - name: newsletter
+        label: Newsletter
+        type: object
+        fields:
+          - name: enabled
+            label: Newsletter-Anmeldung anzeigen
+            type: boolean
+          - name: title
+            label: Überschrift
+            type: string
+          - name: text
+            label: Text
+            type: text
+          - name: embed
+            label: Einbettungscode des Anbieters
+            description: Anmeldeformular-Code von Brevo, CleverReach o. ä. (Double-Opt-in aktivieren!)
+            type: code
+            options:
+              language: html
+      - name: footer_text
+        label: Zusätzlicher Text in der Fußzeile (optional)
+        type: string

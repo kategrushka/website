@@ -1,0 +1,15 @@
+{{- $s := hugo.Data.settings -}}
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    {{ partial "social.html" . }}
+    {{- with $s.email }}
+    <p class="site-footer__email">{{ partial "email.html" (dict "email" .) }}</p>
+    {{- end }}
+    {{- with $s.footer_text }}<p class="site-footer__text">{{ . | markdownify }}</p>{{ end }}
+    <p class="site-footer__legal">
+      <span>© {{ now.Year }} {{ $s.site_name }}</span>
+      {{- with site.GetPage "/impressum" }}<a href="{{ .RelPermalink }}">{{ i18n "imprint" }}</a>{{ end }}
+      {{- with site.GetPage "/datenschutz" }}<a href="{{ .RelPermalink }}">{{ i18n "privacy" }}</a>{{ end }}
+    </p>
+  </div>
+</footer>

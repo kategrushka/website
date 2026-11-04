@@ -1,0 +1,23 @@
+{{- /* Default page (e.g. "Über mich"): header image, optional portrait, text, downloads. */ -}}
+{{ define "main" }}
+{{ partial "hero.html" . }}
+<div class="container {{ if .Params.image }}page-split{{ else }}container--narrow{{ end }}">
+  {{- with .Params.image }}
+  <div class="page-split__media">
+    {{ partial "img.html" (dict "src" . "alt" ($.Params.image_alt | default $.Title) "sizes" "(min-width: 900px) 40vw, 100vw" "widths" (slice 480 800 1200)) }}
+    {{- with $.Params.image_credit }}<p class="credit">{{ i18n "photo_by" }}: {{ . }}</p>{{ end }}
+  </div>
+  {{- end }}
+  <div class="prose{{ if .Params.image }} page-split__text{{ end }}">
+    {{ .Content }}
+    {{- with .Params.downloads }}
+    <h2>{{ i18n "downloads" }}</h2>
+    <ul class="downloads">
+      {{- range . }}
+      <li><a href="{{ partial "url.html" .file }}" download>{{ partial "icon.html" "ui-download" }} {{ .label }}</a></li>
+      {{- end }}
+    </ul>
+    {{- end }}
+  </div>
+</div>
+{{ end }}

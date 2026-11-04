@@ -1,0 +1,12 @@
+{{- /* Social media icons – plain links, no tracking widgets. */ -}}
+{{- with hugo.Data.settings.social }}
+<ul class="social">
+  {{- range . }}
+    {{- if .url }}
+      {{- $icon := cond (eq .platform "website") "ui-link" .platform }}
+      {{- $name := partial "platform-name.html" .platform }}
+  <li><a href="{{ .url }}" rel="me noopener" target="_blank" aria-label="{{ $name }}" title="{{ $name }}">{{ partial "icon.html" $icon }}</a></li>
+    {{- end }}
+  {{- end }}
+</ul>
+{{- end }}

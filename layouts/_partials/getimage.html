@@ -1,0 +1,16 @@
+{{- /*
+  Looks up an uploaded image. Pages CMS stores paths like "/images/foo.jpg",
+  the file itself lives in assets/images/foo.jpg.
+  Returns the image resource, or nothing if the path is empty / file is missing.
+*/ -}}
+{{- $p := . | default "" | string -}}
+{{- $r := false -}}
+{{- if $p -}}
+  {{- $p = strings.TrimPrefix "/" $p -}}
+  {{- with resources.Get $p -}}
+    {{- $r = . -}}
+  {{- else -}}
+    {{- warnf "Bild nicht gefunden: %s" $p -}}
+  {{- end -}}
+{{- end -}}
+{{- return $r -}}

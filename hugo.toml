@@ -1,0 +1,72 @@
+# Hugo configuration – normally you don't need to change anything here.
+# Site name, colours, fonts, menu, social links etc. are edited in
+# data/settings.yml (Pages CMS: "Website-Einstellungen").
+
+# Overridden automatically by the GitHub Actions build (custom domain or github.io URL).
+baseURL = "https://example.com/"
+locale = "de-DE"
+defaultContentLanguage = "de"
+title = "Cellist"
+timeZone = "Europe/Berlin"
+
+# Concerts are dated in the future – they must still be built.
+buildFuture = true
+
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term", "rss"]
+
+[markup.goldmark.renderer]
+  # Pages CMS's rich-text editor stores HTML inside the Markdown files.
+  unsafe = true
+
+[imaging]
+  resampleFilter = "Lanczos"
+  anchor = "Smart"
+  [imaging.jpeg]
+    quality = 80
+  [imaging.webp]
+    quality = 80
+
+[sitemap]
+  changeFreq = "weekly"
+
+# Images uploaded through Pages CMS land in assets/images (so Hugo can resize them).
+# They are additionally published as-is under /images/ so that images inserted
+# into rich-text fields also work.
+[module]
+  [[module.mounts]]
+    source = "content"
+    target = "content"
+  [[module.mounts]]
+    source = "data"
+    target = "data"
+  [[module.mounts]]
+    source = "layouts"
+    target = "layouts"
+  [[module.mounts]]
+    source = "i18n"
+    target = "i18n"
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+  [[module.mounts]]
+    source = "assets/images"
+    target = "static/images"
+
+# Concerts are only listed on the "Termine" page, they don't get pages of their own.
+[[cascade]]
+  [cascade.build]
+    render = "never"
+    list = "always"
+  [cascade.target]
+    path = "/live/**"
+
+# Legal pages don't need to show up in search engine sitemaps.
+[[cascade]]
+  [cascade.sitemap]
+    disable = true
+  [cascade.target]
+    path = "{/impressum,/datenschutz}"

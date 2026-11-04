@@ -1,0 +1,12 @@
+{{- $n := hugo.Data.settings.newsletter | default dict -}}
+{{- if and $n.enabled $n.embed }}
+<section class="newsletter" id="newsletter" aria-labelledby="newsletter-title">
+  <div class="container container--narrow">
+    <h2 id="newsletter-title" class="section-title">{{ $n.title | default "Newsletter" }}</h2>
+    {{- with $n.text }}<p class="newsletter__text">{{ . }}</p>{{ end }}
+    <div class="newsletter__embed">{{ $n.embed | safeHTML }}</div>
+    <p class="newsletter__consent">{{ i18n "newsletter_consent" }}
+      {{- with site.GetPage "/datenschutz" }} <a href="{{ .RelPermalink }}">{{ i18n "privacy_policy" }}</a>{{ end }}.</p>
+  </div>
+</section>
+{{- end }}

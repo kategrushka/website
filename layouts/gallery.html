@@ -1,0 +1,8 @@
+{{- /* Photo gallery page. Images are listed in content/gallery.md. */ -}}
+{{ define "main" }}
+{{ partial "hero.html" . }}
+<div class="container">
+  {{- with .Content }}<div class="prose container--narrow intro">{{ . }}</div>{{ end }}
+  {{ partial "gallery-grid.html" (dict "images" .Params.images "style" .Params.style) }}
+</div>
+{{ end }}
