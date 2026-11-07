@@ -7,4 +7,4 @@ hero:
   text_color: light
   height: small
 ---
-<p>Albums, ensembles and programmes.</p>
+Albums, ensembles and programmes.
